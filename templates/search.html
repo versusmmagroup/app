@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form class="example" method="post" action="">
+    <input type="text" placeholder="Search Fighters" name="fighter">
+    <button type="submit" class="btn btn-success">Search</button>
+</form>
+<br>
+    <table class="table table-striped">
+        <tr>
+            <th>Fighter</th>
+            <th>Weightclass</th>
+            <th>Country</th>
+        </tr>
+        {% for fig_name in data %}
+        <tr>
+            <td><a href="fighterpage/{{fig_name.fig_name}}">{{fig_name.fig_name}}</a></td>
+            <td>{{fig_name.weightclass}}</td>
+            <td>{{fig_name.country}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

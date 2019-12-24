@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    <script src="/static/js/chart.js"></script>
+    <script src="/static/js/datalabels.js"></script>
+    <script src="/static/js/stacked100.js"></script>
+
+</head>
+<body style="background-color: #2F2B32">
+
+    chart-0
+<div>
+    <div>
+        <canvas id="canvas"></canvas>
+    </div>
+    <div>
+        <canvas id="chart-0"></canvas>
+    </div>
+
+    <div>
+        <canvas id="histwins"></canvas>
+    </div>
+    <div>
+        <canvas id="histlosses"></canvas>
+    </div>
+    <div>
+        <canvas id="streaks"></canvas>
+    </div>
+    <div>
+        <canvas id="blah"></canvas>
+    </div>
+
+    <div>
+        <canvas id="off"></canvas>
+    </div>
+</div>
+<hr>
+<div>
+    <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+        <canvas id="sigstrikes"></canvas>
+    </div>
+    <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+        <canvas id="target"></canvas>
+    </div>
+
+    <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+        <canvas id="range"></canvas>
+    </div>
+    <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+        <canvas id="result-chart"></canvas>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+        <canvas id="results"></canvas>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+        <canvas id="wins"></canvas>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+        <canvas id="losses"></canvas>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+    <script>
+        var config = {
+           type: 'line',
+           data: {
+            labels: [{% for date_ in history %}
+                           "{{date_.date_}}",
+                          {% endfor %}],
+              datasets: [{
+                 label: "All Fights",
+                 fill: true, //<-- set this
+                 pointRadius: 0,
+                 borderColor: "#0000ff",
+                 backgroundColor: "rgba(255, 10, 13, 1)",
+                 data : [{% for method in history %}
+                           "{{method.method}}",
+                         {% endfor %}],
+
+              },
+              {
+                   label: "Wins",
+                   pointRadius: 0,
+                   backgroundColor: "rgba(255, 10, 13, 1)",
+                   data : [{% for method in historywins %}
+                             "{{method.method}}",
+                           {% endfor %}],
+
+                            },
+                            {
+                 fill: 'origin',
+                 label: "Losses",
+                 pointRadius: 0,
+                 backgroundColor: "rgba(29,241,13,180)",
+                 data : [{% for method in historylosses %}
+                           "{{method.method}}",
+                         {% endfor %}],
+
+              },
+              {
+                  fill: 'origin',
+                  label: "Draws",
+                  pointRadius: 0,
+                  backgroundColor: "purple",
+                  data : [{% for method in historydraw %}
+                            "{{method.method}}",
+                          {% endfor %}],
+
+               },
+               {
+                   fill: 'origin',
+                   label: "NC",
+                   pointRadius: 0,
+                   backgroundColor: "black",
+                   data : [{% for method in historync %}
+                             "{{method.method}}",
+                           {% endfor %}],
+
+                }]
+           },
+           options: {
+              responsive: true,
+              title: {
+                 display: true,
+                 text: "Chart.js Line Chart - Stacked Area"
+              },
+              tooltips: {
+                 mode: 'index',
+              },
+              hover: {
+                 mode: 'index'
+              },
+              scales: {
+                 xAxes: [{
+                    scaleLabel: {
+                       display: true,
+                       labelString: 'Time'
+                    }
+                 }],
+                 yAxes: [{
+                    type: 'category',
+                    labels: ['KO', 'TKO', 'Submission', 'Decision', 'Draw', 'NC', 'Disqualification'],
+
+                    stacked: false,
+                    scaleLabel: {
+                    scaleOverride: true,
+                       display: true,
+                       labelString: 'kWh',
+                    }
+                 }]
+              }
+           }
+        };
+        var ctx = document.getElementById("canvas").getContext("2d");
+        var myChart = new Chart(ctx, config);
+    </script>
+    <script>
+        var options = {
+          type: 'line',
+          data: {
+            labels: [{% for date_ in historywins %}
+                     "{{date_.date_}}",
+                    {% endfor %}],
+            datasets: [
+                {
+                  label: 'Wins',
+                  data : [{% for method in historywins %}
+                            "{{method.method}}",
+                          {% endfor %}],
+                borderWidth: 1,
+                }]
+          },
+          options: {
+            scales: {
+                yAxes: [{
+                ticks: {
+                            reverse: false
+                },
+                type: 'category',
+                labels: ['KO', 'TKO', 'Submission', 'Decision', 'Draw', 'NC', 'Disqualification'],
+
+              }]
+            }
+          }
+        }
+
+        var ctx = document.getElementById('histwins').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        var options = {
+          type: 'line',
+          data: {
+            labels: [{% for date_ in historylosses %}
+                     "{{date_.date_}}",
+                    {% endfor %}],
+            datasets: [
+                {
+                  label: 'Losses',
+                  data : [{% for method in historylosses %}
+                            "{{method.method}}",
+                          {% endfor %}],
+                borderWidth: 1,
+                }]
+          },
+          options: {
+            scales: {
+                yAxes: [{
+                ticks: {
+                            reverse: false
+                },
+                type: 'category',
+                labels: ['KO', 'TKO', 'Submission', 'Decision', 'Draw', 'NC', 'Disqualification'],
+
+              }]
+            }
+          }
+        }
+
+        var ctx = document.getElementById('histlosses').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        var options = {
+          type: 'line',
+          data: {
+            labels: [{% for result in history %}
+                     "{{result.result}}",
+                    {% endfor %}],
+            datasets: [
+                {
+                  label: 'Streaks',
+                  data : [{% for result in history %}
+                            "{{result.result}}",
+                          {% endfor %}],
+                borderWidth: 1,
+                }]
+          },
+          options: {
+            scales: {
+                yAxes: [{
+                ticks: {
+                            reverse: false
+                },
+                type: 'category',
+                labels: ['Win', 'Loss', 'Draw', 'NC', 'Disqualification'],
+              }]
+            }
+          }
+        }
+
+        var ctx = document.getElementById('streaks').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        var chartData = {
+          labels : [{% for date_ in history %}
+                     "{{date_.date_}}",
+                    {% endfor %}],
+          datasets : [{
+              label: 'Result',
+              fill: false,
+              lineTension: 0.2,
+              backgroundColor: "rgba(75,192,192,0.4)",
+              borderColor: "green",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: "rgba(75,192,192,1)",
+              pointBackgroundColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+              pointBorderWidth: 1,
+              pointHoverRadius: 10,
+              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+              pointHoverBorderColor: "rgba(220,220,220,1)",
+              pointHoverBorderWidth: 2,
+              pointRadius: 10,
+              pointHitRadius: 10,
+              data : [{% for method in history %}
+                        "{{method.method}}",
+                      {% endfor %}],
+              spanGaps: false
+          }]
+        }
+         
+        // get chart canvas
+        var ctx = document.getElementById("blah").getContext("2d");
+         
+        // create the chart using the chart canvas
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: chartData,options: {
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    color: "red"
+                },
+                ticks: {
+                    display: true,
+                    fontFamily: "'Open Sans', sans-serif",
+                    fontSize: 12,
+                    fontStyle: "bold",
+                    fontColor: "red",
+                    padding: 5,
+                  },
+                type: 'category',
+                labels: ['KO', 'TKO', 'Submission', 'Decision', 'Draw', 'NC', 'Disqualification'],
+            }]
+        }
+    }
+});
+    </script>
+</div>
+    <script>
+        Chart.defaults.global.defaultFontColor = '#E8E8E8';
+        new Chart(document.getElementById("sigstrikes"), {
+          type: "horizontalBar",
+          data: {
+            labels: ["Total Strikes", "Significant Stirkes", "Head Strikes", "Body Strikes", "Leg Strikes", "Distance Strikes", "Clinch Strikes", "Ground Strikes", "Takedowns", "Submissions"],
+            datasets: [
+              { label: "landed", data: [{{tsl.tsl}}, {{ssla.ssla}}, {{hsl.hsl}}, {{bsl.bsl}}, {{lsl.lsl}}, {{dsl.dsl}}, {{csl.csl}}, {{gsl.gsl}}, {{tdl.tdl}}, {{tsubw.tsubw}}], backgroundColor: "#9d650c" },
+              { label: "attempted", data: [{{tsm.tsm}}, {{ssm.ssm}}, {{hsm.hsm}}, {{bsm.bsm}}, {{lsm.lsm}}, {{dsm.dsm}}, {{csm.csm}}, {{gsm.gsm}}, {{tdm.tdm}}, {{subs.subs}}], backgroundColor: "#4f3206" }            ]
+          },
+          options: {
+            plugins: {
+              stacked100: { enable: true }
+                     },
+                scales: {
+                        xAxes: [{
+                            barPercentage: 0.8,
+                            display: false,
+                        }],
+                        yAxes: [{
+                            barPercentage: 0.8,
+                            display: true  
+                        }]
+                        }
+            }
+          });
+    </script>
+    <script>
+        new Chart(document.getElementById("target"), {
+          type: "horizontalBar",
+          data: {
+            labels: ["Target"],
+            datasets: [
+                  { label: "head", data: [{{hsl.hsl}}], backgroundColor: "rgba(244, 143, 177, 0.6)" },
+                  { label: "body", data: [{{bsl.bsl}}], backgroundColor: "rgba(255, 235, 59, 0.6)" },
+                  { label: "leg", data: [{{lsl.lsl}}], backgroundColor: "rgba(100, 181, 246, 0.6)" }
+                ]
+          },
+          options: {
+            plugins: {
+                stacked100: {
+                  formatter: (_value, context) => {
+                    const data = context.chart.data;
+                    const { datasetIndex, dataIndex } = context;
+                    const originalValue = data.originalData[datasetIndex][tooltipItem.index];
+                    const rateValue = data.calculatedData[datasetIndex][tooltipItem.index];
+                    return `${datasetLabel}: ${rateValue}% (raw ${originalValue})`;
+                    return `${data.calculatedData[datasetIndex][dataIndex]}% (${data.originalData[datasetIndex][dataIndex]})`;
+                  }
+                },
+                stacked100: { enable: true }
+              },
+              scales: {
+                      xAxes: [{
+                          barPercentage: 0.1,
+                          display: false,
+                      }],
+                      yAxes: [{
+                          barPercentage: 0.1,
+                          display: false  
+                      }]
+                  }
+          }
+        });
+    </script>
+    <script>
+        new Chart(document.getElementById("range"), {
+          type: "horizontalBar",
+          data: {
+            labels: ["Range"],
+            datasets: [
+                  { label: "distance", data: [{{dsl.dsl}}], backgroundColor: "rgba(244, 143, 177, 0.6)" },
+                  { label: "clinch", data: [{{csl.csl}}], backgroundColor: "rgba(255, 235, 59, 0.6)" },
+                  { label: "ground", data: [{{gsl.gsl}}], backgroundColor: "rgba(100, 181, 246, 0.6)" }
+                ]
+          },
+          options: {
+            plugins: {
+                stacked100: {
+                  formatter: (_value, context) => {
+                    const data = context.chart.data;
+                    const { datasetIndex, dataIndex } = context;
+                    const originalValue = data.originalData[datasetIndex][tooltipItem.index];
+                    const rateValue = data.calculatedData[datasetIndex][tooltipItem.index];
+                    return `${datasetLabel}: ${rateValue}% (raw ${originalValue})`;
+                    return `${data.calculatedData[datasetIndex][dataIndex]}% (${data.originalData[datasetIndex][dataIndex]})`;
+                  }
+                },
+                stacked100: { enable: true }
+              },
+              scales: {
+                      xAxes: [{
+                          barPercentage: 0.5,
+                          display: false,
+                      }],
+                      yAxes: [{
+                          barPercentage: 0.5,
+                          display: false  
+                      }]
+                  }
+          }
+        });
+    </script>
+    <script>
+        new Chart(document.getElementById("result-chart"), {
+          type: "horizontalBar",
+          data: {
+              labels: ["Result"],
+              datasets: [
+                { label: "win", data: [{{tw.tw}}], backgroundColor: "#5cb85c" },
+                { label: "draw", data: [{{draws.draws}}], backgroundColor: "#FFFF00" },
+                { label: "nc", data: [{{nc.nc}}], backgroundColor: "#000000" },
+                { label: "loss", data: [{{tl.tl}}], backgroundColor: "#ff0000" }
+              ]
+            },
+          options: {
+              tooltips: {
+                  enabled: false
+              },
+              plugins: {
+                stacked100: {
+                  formatter: (_value, context) => {
+                    const data = context.chart.data;
+                    const { datasetIndex, dataIndex } = context;
+                    const originalValue = data.originalData[datasetIndex][tooltipItem.index];
+                    const rateValue = data.calculatedData[datasetIndex][tooltipItem.index];
+                    return `${datasetLabel}: ${rateValue}% (raw ${originalValue})`;
+                    return `${data.calculatedData[datasetIndex][dataIndex]}% (${data.originalData[datasetIndex][dataIndex]})`;
+                  }
+                },
+                stacked100: { enable: true }
+              },
+              scales: {
+                      xAxes: [{
+                          barPercentage: 0.8,
+                          display: false,
+                      }],
+                      yAxes: [{
+                          barPercentage: 0.8,
+                          display: false  
+                      }]
+                  }
+            }
+          });
+    </script>
+    <script>
+        var ctx = document.getElementById('results').getContext('2d');
+        var results = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Win ({{tw.tw}})', 'Draw ({{draws.draws}})', 'Loss ({{tl.tl}})', 'No Contest ({{nc.nc}})'],
+                datasets: [{
+                    data: [{{tw.tw}}, {{draws.draws}}, {{tl.tl}}, {{nc.nc}}],
+                    backgroundColor: ['#00cc00', '#FFFF00','#ff3333', '000000'],
+                    borderWidth: 0.5 ,
+                    borderColor: '#ddd'
+                }]
+            },
+            options: {
+                elements: {
+                      center: {
+                      text: '{{tfs.tfs}}',
+                      color: '#000000', //Default black
+                      borderWidth: 0.5 ,
+                      borderColor: '#ff3333',
+                      fontStyle: 'Helvetica', //Default Arial
+                      sidePadding: 50 //Default 20 (as a percentage)
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Results',
+                    position: 'top',
+                    fontSize: 16,
+                    fontColor: '#111',
+                    padding: 20
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 10,
+                        fontColor: '#111',
+                        padding: 30
+                    }
+                },
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                   datalabels: {
+                        backgroundColor: 'white',
+                        anchor: 'end',
+                        display: 'center',
+                        color: '#000000',
+                        align: 'end',
+                        textAlign: 'center',
+                        font: {
+                            lineHeight: 1.0
+                        },
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value*100 / sum).toFixed(2)+"%";
+                            return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('wins').getContext('2d');
+        var wins = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['KO/TKO ({{tkow.tkow}})', 'Submission ({{tsubw.tsubw}})', 'Decision ({{tdecw.tdecw}})'],
+                datasets: [{
+                    data: [{{tkow.tkow}}, {{tsubw.tsubw}}, {{tdecw.tdecw}}],
+                    backgroundColor: ['#00cc00', '#00a100', '#ccff99'],
+                    borderWidth: 0.5 ,
+                    borderColor: '#00cc00'
+                }]
+            },
+            options: {
+                elements: {
+                      center: {
+                      text: '{{tw.tw}}',
+                      color: '#00cc00', //Default black
+                      borderWidth: 0.5 ,
+                      borderColor: '#00cc00',
+                      fontStyle: 'Helvetica', //Default Arial
+                      sidePadding: 50 //Default 20 (as a percentage)
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Wins',
+                    position: 'top',
+                    fontSize: 16,
+                    fontColor: '#111',
+                    padding: 20
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 20,
+                        fontColor: '#111',
+                        padding: 30
+                    }
+                },
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                   datalabels: {
+                        anchor: 'end',
+                        display: 'center',
+                        color: '#000000',
+                        align: 'end',
+                        textAlign: 'center',
+                        font: {
+                            lineHeight: 1.0
+                        },
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value*100 / sum).toFixed(2)+"%";
+                            return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('losses').getContext('2d');
+        var losses = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['KO/TKO ({{tkol.tkol}})', 'Submission ({{tsubl.tsubl}})', 'Decision ({{tdecl.tdecl}})'],
+                datasets: [{
+                    data: [{{tkol.tkol}}, {{tsubl.tsubl}}, {{tdecl.tdecl}}],
+                    backgroundColor: ['#ff3333', '#990000', '#ff9999'],
+                    borderWidth: 0.5 ,
+                    borderColor: '#ff3333'
+                }]
+            },
+            options: {
+                elements: {
+                      center: {
+                      text: '{{tl.tl}}',
+                      color: '#ff3333', //Default black
+                      borderWidth: 0.5 ,
+                      borderColor: '#ff3333',
+                      fontStyle: 'Helvetica', //Default Arial
+                      sidePadding: 50 //Default 20 (as a percentage)
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Losses',
+                    position: 'top',
+                    fontSize: 16,
+                    fontColor: '#111',
+                    padding: 20,
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 20,
+                        fontColor: '#111',
+                        padding: 30
+                    }
+                },
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                   datalabels: {
+                        anchor: 'end',
+                        display: 'center',
+                        color: '#000000',
+                        align: 'end',
+                        textAlign: 'center',
+                        font: {
+                            lineHeight: 1.0
+                        },
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value*100 / sum).toFixed(2)+"%";
+                            return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        Chart.pluginService.register({
+          beforeDraw: function (chart) {
+            if (chart.config.options.elements.center) {
+              //Get ctx from string
+              var ctx = chart.chart.ctx;
+
+              //Get options from the center object in options
+              var centerConfig = chart.config.options.elements.center;
+              var fontStyle = centerConfig.fontStyle || 'Arial';
+              var txt = centerConfig.text;
+              var color = centerConfig.color || '#000';
+              var sidePadding = centerConfig.sidePadding || 20;
+              var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+              //Start with a base font of 30px
+              ctx.font = "30px " + fontStyle;
+
+              //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+              var stringWidth = ctx.measureText(txt).width;
+              var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+              // Find out how much the font can grow in width.
+              var widthRatio = elementWidth / stringWidth;
+              var newFontSize = Math.floor(30 * widthRatio);
+              var elementHeight = (chart.innerRadius * 2);
+
+              // Pick a new font size so it will not be larger than the height of label.
+              var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+              //Set font settings to draw it correctly.
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+              var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+              ctx.font = fontSizeToUse+"px " + fontStyle;
+              ctx.fillStyle = color;
+
+              //Draw text in center
+              ctx.fillText(txt, centerX, centerY);
+            }
+          }
+        });        </script>
+</body>
+</html>
+

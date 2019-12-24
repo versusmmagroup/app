@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Versus MMA Group</title>
+    <link rel="stylesheet" href='/static/css/bootstrap.css' />
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    <script src="/static/js/datalabels.js"></script>
+    <script src="/static/js/stacked100.js"></script>
+</head>
+<body style="background-color: #2F2B32">
+    {% include 'includes/_navbar.html' %}
+    <div class="container">
+      {% include 'includes/_messages.html' %}
+      {% block body %}{% endblock %}
+    </div>
+    <script>
+        var options = {
+          type: 'line',
+          data: {
+            datasets: [{
+                  label: 'Wins',
+                  borderColor: "#00cc00",
+                  pointRadius: 1,
+                  pointHitRadius: 5,
+                  pointBorderColor: "#E8E8E8",
+                  lineHeight: .1,
+                  datalabels: {
+                    display: 'auto',
+                    color: "#E8E8E8",
+                    transparency: 50
+                  },
+                  data : [{% for method in historywins %}
+                            "{{method.method}}",
+                          {% endfor %}],
+                borderWidth: 1,
+                }]
+          },
+          options: {
+            tooltips: {
+                mode: 'label'
+            },
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    display: false,
+                ticks: {
+                    reverse: false,
+                    fontColor: 'green',
+                },
+                type: 'category',
+                labels: ['KO', 'TKO', 'Submission', 'Decision']
+              }],
+                xAxes: [{
+                    gridLines: {
+                             display: false
+                           },
+                type: 'category',
+                labels: [{% for date_ in historywins %}
+                               "{{date_.date_}}",
+                              {% endfor %}]
+              }]
+            }
+          }
+        }
+
+        var ctx = document.getElementById('histwins').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        var options = {
+          type: 'line',
+                    data: {
+                      datasets: [{
+                            label: 'Losses',
+                            borderColor: "#ff3333",
+                            pointRadius: 1,
+                            pointHitRadius: 5,
+                            pointBorderColor: "#E8E8E8",
+                            lineHeight: .1,
+                            datalabels: {
+                              display: 'auto',
+                              color: "#E8E8E8",
+                              transparency: 50
+                            },
+                            data : [{% for method in historylosses %}
+                                      "{{method.method}}",
+                                    {% endfor %}],
+                          borderWidth: 1,
+                          }]
+                    },
+          options: {
+            tooltips: {
+                mode: 'label'
+            },
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    display: false,
+                ticks: {
+                    reverse: false,
+                    fontColor: 'green',
+                },
+                type: 'category',
+                labels: ['KO', 'TKO', 'Submission', 'Decision']
+              }],
+                xAxes: [{
+                    gridLines: {
+                             display: false
+                           },
+                type: 'category',
+                labels: [{% for date_ in historylosses %}
+                               "{{date_.date_}}",
+                              {% endfor %}]
+              }]
+            }
+          }
+        }
+        var ctx = document.getElementById('histlosses').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        var options = {
+          type: 'line',
+          data: {
+            datasets: [{
+                  label: 'Streaks',
+                  borderColor: "#FFFF00",
+                  pointRadius: 1,
+                  pointHitRadius: 5,
+                  pointBorderColor: "#E8E8E8",
+                  lineHeight: .1,
+                  datalabels: {
+                    display: 'auto',
+                    color: "#E8E8E8",
+                    transparency: 50
+                  },
+                  data : [{% for result in history %}
+                            "{{result.result}}",
+                          {% endfor %}],
+                borderWidth: 1,
+                }]
+          },
+          options: {
+            tooltips: {
+                mode: 'label'
+            },
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    display: false,
+                ticks: {
+                    reverse: false,
+                    fontColor: 'green',
+                },
+                type: 'category',
+                labels: ['Win', 'Loss', 'Draw', 'NC', 'Disqualification'],
+              }],
+                xAxes: [{
+                    gridLines: {
+                             display: false
+                           },
+                type: 'category',
+                labels: [{% for date_ in history %}
+                               "{{date_.date_}}",
+                              {% endfor %}]
+              }]
+            }
+          }
+        }
+        var ctx = document.getElementById('streaks').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        var options = {
+          type: 'line',
+          data: {
+            datasets: [{
+                  label: 'Wins',
+                  borderColor: '#00cc00',
+                  pointRadius: 1,
+                  pointHitRadius: 5,
+                  pointBorderColor: "#E8E8E8",
+                  lineHeight: .1,
+                  datalabels: {
+                    display: 'auto',
+                    color: "#E8E8E8",
+                    transparency: 50
+                  },
+                  data : [{% for method in opp_historywins %}
+                            "{{method.method}}",
+                          {% endfor %}],
+                borderWidth: 1,
+                }]
+          },
+          options: {
+            tooltips: {
+                mode: 'label'
+            },
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    display: false,
+                ticks: {
+                    reverse: false,
+                    fontColor: 'green',
+                },
+                type: 'category',
+                labels: ['KO', 'TKO', 'Submission', 'Decision']
+              }],
+                xAxes: [{
+                    gridLines: {
+                             display: false
+                           },
+                type: 'category',
+                labels: [{% for date_ in opp_historywins %}
+                               "{{date_.date_}}",
+                              {% endfor %}]
+              }]
+            }
+          }
+        }
+        var ctx = document.getElementById('opp_histwins').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        var options = {
+          type: 'line',
+                    data: {
+                      datasets: [{
+                            label: 'Losses',
+                            borderColor: "#ff3333",
+                            pointRadius: 1,
+                            pointHitRadius: 5,
+                            pointBorderColor: "#E8E8E8",
+                            lineHeight: .1,
+                            datalabels: {
+                              display: 'auto',
+                              color: "#E8E8E8",
+                              transparency: 50
+                            },
+                            data : [{% for method in opp_historylosses %}
+                                      "{{method.method}}",
+                                    {% endfor %}],
+                          borderWidth: 1,
+                          }]
+                    },
+          options: {
+            tooltips: {
+                mode: 'label'
+            },
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    display: false,
+                ticks: {
+                    reverse: false,
+                    fontColor: 'green',
+                },
+                type: 'category',
+                labels: ['KO', 'TKO', 'Submission', 'Decision']
+              }],
+                xAxes: [{
+                    gridLines: {
+                             display: false
+                           },
+                type: 'category',
+                labels: [{% for date_ in opp_historylosses %}
+                               "{{date_.date_}}",
+                              {% endfor %}]
+              }]
+            }
+          }
+        }
+        var ctx = document.getElementById('opp_histlosses').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        var options = {
+          type: 'line',
+          data: {
+            datasets: [{
+                  label: 'Streaks',
+                  borderColor: "#FFFF00",
+                  pointRadius: 1,
+                  pointHitRadius: 5,
+                  pointBorderColor: "#E8E8E8",
+                  lineHeight: .1,
+                  datalabels: {
+                    display: 'auto',
+                    color: "#E8E8E8",
+                    transparency: 50
+                  },
+                  data : [{% for result in opp_history %}
+                            "{{result.result}}",
+                          {% endfor %}],
+                borderWidth: 1,
+                }]
+          },
+          options: {
+            tooltips: {
+                mode: 'label'
+            },
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    display: false,
+                ticks: {
+                    reverse: false,
+                    fontColor: 'green',
+                },
+                type: 'category',
+                labels: ['Win', 'Loss', 'Draw', 'NC', 'Disqualification'],
+              }],
+                xAxes: [{
+                    gridLines: {
+                             display: false
+                           },
+                type: 'category',
+                labels: [{% for date_ in opp_history %}
+                               "{{date_.date_}}",
+                              {% endfor %}]
+              }]
+            }
+          }
+        }
+        var ctx = document.getElementById('opp_streaks').getContext('2d');
+        var myChart = new Chart(ctx, options);
+    </script>
+    <script>
+        Chart.defaults.global.defaultFontColor = '#E8E8E8';
+        new Chart(document.getElementById("offensive"), {
+          type: "bar",
+          data: {
+            labels: ["Total Strikes", "Significant Stirkes", "Head Strikes", "Body Strikes", "Leg Strikes", "Distance Strikes", "Clinch Strikes", "Ground Strikes", "Takedowns"],
+            datasets: [
+              { label: "landed", data: [{{tsl.tsl}}, {{ssla.ssla}}, {{hsl.hsl}}, {{bsl.bsl}}, {{lsl.lsl}}, {{dsl.dsl}}, {{csl.csl}}, {{gsl.gsl}}, {{tdl.tdl}}], backgroundColor: "#9d650c" },
+              { label: "missed", data: [{{tsm.tsm}}, {{ssm.ssm}}, {{hsm.hsm}}, {{bsm.bsm}}, {{lsm.lsm}}, {{dsm.dsm}}, {{csm.csm}}, {{gsm.gsm}}, {{tdm.tdm}}], backgroundColor: "#4f3206" }            ]
+          },
+          options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: {
+              datalabels: { enable: false },
+              stacked100: { enable: true }
+                     },
+                scales: {
+                        xAxes: [{
+                            barPercentage: 1.0,
+                            display: true,
+                        }],
+                        yAxes: [{
+                            barPercentage: 1.0,
+                            display: false  
+                        }]
+                        }
+            }
+          });
+    </script>
+    <script>
+        Chart.defaults.global.defaultFontColor = '#E8E8E8';
+        new Chart(document.getElementById("opp_offensive"), {
+          type: "bar",
+          data: {
+            labels: ["Total Strikes", "Significant Stirkes", "Head Strikes", "Body Strikes", "Leg Strikes", "Distance Strikes", "Clinch Strikes", "Ground Strikes", "Takedowns"],
+            datasets: [
+              { label: "landed", data: [{{opp_tsl.opp_tsl}}, {{opp_ssla.opp_ssla}}, {{opp_hsl.opp_hsl}}, {{opp_bsl.opp_bsl}}, {{opp_lsl.opp_lsl}}, {{opp_dsl.opp_dsl}}, {{opp_csl.opp_csl}}, {{opp_gsl.opp_gsl}}, {{opp_tdl.opp_tdl}}], backgroundColor: "#9d650c" },
+              { label: "missed", data: [{{opp_tsm.opp_tsm}}, {{opp_ssm.opp_ssm}}, {{opp_hsm.opp_hsm}}, {{opp_bsm.opp_bsm}}, {{opp_lsm.opp_lsm}}, {{opp_dsm.opp_dsm}}, {{opp_csm.opp_csm}}, {{opp_gsm.opp_gsm}}, {{opp_tdm.opp_tdm}}], backgroundColor: "#4f3206" }            ]
+          },
+          options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: {
+              datalabels: { enable: false },
+              stacked100: { enable: true }
+                     },
+                scales: {
+                        xAxes: [{
+                            barPercentage: 1.0,
+                            display: true,
+                        }],
+                        yAxes: [{
+                            barPercentage: 1.0,
+                            display: false  
+                        }]
+                        }
+            }
+          });
+    </script>
+    <script>
+        Chart.defaults.global.defaultFontColor = '#E8E8E8';
+        new Chart(document.getElementById("defensive"), {
+          type: "bar",
+          data: {
+            labels: ["Total Strikes", "Significant Stirkes", "Head Strikes", "Body Strikes", "Leg Strikes", "Distance Strikes", "Clinch Strikes", "Ground Strikes", "Takedowns"],
+            datasets: [
+              { label: "absorbed", data: [{{dtsl.dtsl}}, {{dssla.dssla}}, {{dhsl.dhsl}}, {{dbsl.dbsl}}, {{dlsl.dlsl}}, {{ddsl.ddsl}}, {{dcsl.dcsl}}, {{dgsl.dgsl}}, {{dtdl.dtdl}}], backgroundColor: "#9d650c" },
+              { label: "defended", data: [{{dtsm.dtsm}}, {{dssm.dssm}}, {{dhsm.dhsm}}, {{dbsm.dbsm}}, {{dlsm.dlsm}}, {{ddsm.ddsm}}, {{dcsm.dcsm}}, {{dgsm.dgsm}}, {{dtdm.dtdm}}], backgroundColor: "#4f3206" }            ]
+          },
+          options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: {
+              datalabels: { enable: false },
+              stacked100: { enable: true }
+                     },
+                scales: {
+                        xAxes: [{
+                            barPercentage: 1.0,
+                            display: true,
+                        }],
+                        yAxes: [{
+                            barPercentage: 1.0,
+                            display: false  
+                        }]
+                        }
+            }
+          });
+    </script>
+    <script>
+        Chart.defaults.global.defaultFontColor = '#E8E8E8';
+        new Chart(document.getElementById("opp_defensive"), {
+          type: "bar",
+          data: {
+            labels: ["Total Strikes", "Significant Stirkes", "Head Strikes", "Body Strikes", "Leg Strikes", "Distance Strikes", "Clinch Strikes", "Ground Strikes", "Takedowns"],
+            datasets: [
+              { label: "absorbed", data: [{{opp_dtsl.opp_dtsl}}, {{opp_dssla.opp_dssla}}, {{opp_dhsl.opp_dhsl}}, {{opp_dbsl.opp_dbsl}}, {{opp_dlsl.opp_dlsl}}, {{opp_ddsl.opp_ddsl}}, {{opp_dcsl.opp_dcsl}}, {{opp_dgsl.opp_dgsl}}, {{opp_dtdl.opp_dtdl}}], backgroundColor: "#9d650c" },
+              { label: "defended", data: [{{opp_dtsm.opp_dtsm}}, {{opp_dssm.opp_dssm}}, {{opp_dhsm.opp_dhsm}}, {{opp_dbsm.opp_dbsm}}, {{opp_dlsm.opp_dlsm}}, {{opp_ddsm.opp_ddsm}}, {{opp_dcsm.opp_dcsm}}, {{opp_dgsm.opp_dgsm}}, {{opp_dtdm.opp_dtdm}}], backgroundColor: "#4f3206" }            ]
+          },
+          options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: {
+              datalabels: { enable: false },
+              stacked100: { enable: true }
+                     },
+                scales: {
+                        xAxes: [{
+                            barPercentage: 1.0,
+                            display: true,
+                        }],
+                        yAxes: [{
+                            barPercentage: 1.0,
+                            display: false  
+                        }]
+                        }
+            }
+          });
+    </script>
+
+    <script>
+        new Chart(document.getElementById("result-chart"), {
+          type: "horizontalBar",
+          data: {
+              labels: ["Result"],
+              datasets: [
+                { label: "win", data: [{{tw.tw}}], backgroundColor: "#5cb85c" },
+                { label: "draw", data: [{{draws.draws}}], backgroundColor: "#FFFF00" },
+                { label: "nc", data: [{{nc.nc}}], backgroundColor: "#000000" },
+                { label: "loss", data: [{{tl.tl}}], backgroundColor: "#ff0000" }
+              ]
+            },
+          options: {
+              tooltips: {
+                  enabled: false
+              },
+              plugins: {
+                stacked100: {
+                  formatter: (_value, context) => {
+                    const data = context.chart.data;
+                    const { datasetIndex, dataIndex } = context;
+                    const originalValue = data.originalData[datasetIndex][tooltipItem.index];
+                    const rateValue = data.calculatedData[datasetIndex][tooltipItem.index];
+                    return `${datasetLabel}: ${rateValue}% (raw ${originalValue})`;
+                    return `${data.calculatedData[datasetIndex][dataIndex]}% (${data.originalData[datasetIndex][dataIndex]})`;
+                  }
+                },
+                stacked100: { enable: true }
+              },
+              scales: {
+                      xAxes: [{
+                          barPercentage: 0.8,
+                          display: false,
+                      }],
+                      yAxes: [{
+                          barPercentage: 0.8,
+                          display: false  
+                      }]
+                  }
+            }
+          });
+    </script>
+    <script>
+        var ctx = document.getElementById('results').getContext('2d');
+        var results = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Win ({{tw.tw}})', 'Draw ({{draws.draws}})', 'Loss ({{tl.tl}})', 'No Contest ({{nc.nc}})'],
+                datasets: [{
+                    data: [{{tw.tw}}, {{draws.draws}}, {{tl.tl}}, {{nc.nc}}],
+                    backgroundColor: ['#00cc00', '#FFFF00','#ff3333', '000000'],
+                    borderWidth: 0.5 ,
+                    borderColor: '#ddd'
+                }]
+            },
+            options: {
+                responsive: true, 
+                maintainAspectRatio: false,
+                elements: {
+                      center: {
+                      text: '{{tfs.tfs}}',
+                      color: '#E8E8E8', //Default black
+                      borderWidth: 0.5 ,
+                      borderColor: '#ff3333',
+                      fontStyle: 'Helvetica', //Default Arial
+                      sidePadding: 50 //Default 20 (as a percentage)
+                    }
+                },
+                title: {
+                    display: false,
+                    text: 'Results',
+                    position: 'top',
+                    fontSize: 16,
+                    fontColor: '#E8E8E8',
+                    padding: 20
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 10,
+                        fontColor: '#E8E8E8',
+                        padding: 20
+                    }
+                },
+                tooltips: {
+                    enabled: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 20,
+                        top: 20
+                    }
+                },
+                plugins: {
+                   datalabels: {
+                        anchor: 'end',
+                        display: 'center',
+                        color: '#E8E8E8',
+                        align: 'end',
+                        textAlign: 'center',
+                        font: {
+                            lineHeight: 1.0
+                        },
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value*100 / sum).toFixed(2)+"%";
+                            return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('wins').getContext('2d');
+        var wins = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['KO/TKO ({{tkow.tkow}})', 'Submission ({{tsubw.tsubw}})', 'Decision ({{tdecw.tdecw}})'],
+                datasets: [{
+                    data: [{{tkow.tkow}}, {{tsubw.tsubw}}, {{tdecw.tdecw}}],
+                    backgroundColor: ['#00cc00', '#00a100', '#ccff99'],
+                    borderWidth: 0.5 ,
+                    borderColor: '#00cc00'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                      center: {
+                      text: '{{tw.tw}}',
+                      color: '#E8E8E8', //Default black
+                      borderWidth: 0.5 ,
+                      borderColor: '#00cc00',
+                      fontStyle: 'Helvetica', //Default Arial
+                      sidePadding: 50 //Default 20 (as a percentage)
+                    }
+                },
+                title: {
+                    display: false,
+                    text: 'Wins',
+                    position: 'top',
+                    fontSize: 16,
+                    fontColor: '#E8E8E8',
+                    padding: 20
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 10,
+                        fontColor: '#E8E8E8',
+                        padding: 20
+                    }
+                },
+                tooltips: {
+                    enabled: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 20,
+                        top: 20
+                    }
+                },
+                plugins: {
+                   datalabels: {
+                        anchor: 'end',
+                        display: 'center',
+                        color: '#E8E8E8',
+                        align: 'end',
+                        textAlign: 'center',
+                        font: {
+                            lineHeight: 1.0
+                        },
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value*100 / sum).toFixed(2)+"%";
+                            return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('losses').getContext('2d');
+        var losses = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['KO/TKO ({{tkol.tkol}})', 'Submission ({{tsubl.tsubl}})', 'Decision ({{tdecl.tdecl}})'],
+                datasets: [{
+                    data: [{{tkol.tkol}}, {{tsubl.tsubl}}, {{tdecl.tdecl}}],
+                    backgroundColor: ['#ff3333', '#990000', '#ff9999'],
+                    borderWidth: 0.5 ,
+                    borderColor: '#ff3333'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                      center: {
+                      text: '{{tl.tl}}',
+                      color: '#E8E8E8', //Default black
+                      borderWidth: 0.5 ,
+                      borderColor: '#ff3333',
+                      fontStyle: 'Helvetica', //Default Arial
+                      sidePadding: 50 //Default 20 (as a percentage)
+                    }
+                },
+                title: {
+                    display: false,
+                    text: 'Losses',
+                    position: 'top',
+                    fontSize: 16,
+                    fontColor: '#E8E8E8',
+                    padding: 20,
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 10,
+                        fontColor: '#E8E8E8',
+                        padding: 20
+                    }
+                },
+                tooltips: {
+                    enabled: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 20,
+                        top: 20
+                    }
+                },
+                plugins: {
+                   datalabels: {
+                        anchor: 'end',
+                        display: 'center',
+                        color: '#E8E8E8',
+                        align: 'end',
+                        textAlign: 'center',
+                        font: {
+                            lineHeight: 1.0
+                        },
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value*100 / sum).toFixed(2)+"%";
+                            return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        Chart.pluginService.register({
+          beforeDraw: function (chart) {
+            if (chart.config.options.elements.center) {
+              //Get ctx from string
+              var ctx = chart.chart.ctx;
+
+              //Get options from the center object in options
+              var centerConfig = chart.config.options.elements.center;
+              var fontStyle = centerConfig.fontStyle || 'Arial';
+              var txt = centerConfig.text;
+              var color = centerConfig.color || '#000';
+              var sidePadding = centerConfig.sidePadding || 20;
+              var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+              //Start with a base font of 30px
+              ctx.font = "30px " + fontStyle;
+
+              //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+              var stringWidth = ctx.measureText(txt).width;
+              var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+              // Find out how much the font can grow in width.
+              var widthRatio = elementWidth / stringWidth;
+              var newFontSize = Math.floor(30 * widthRatio);
+              var elementHeight = (chart.innerRadius * 2);
+
+              // Pick a new font size so it will not be larger than the height of label.
+              var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+              //Set font settings to draw it correctly.
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+              var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+              ctx.font = fontSizeToUse+"px " + fontStyle;
+              ctx.fillStyle = color;
+
+              //Draw text in center
+              ctx.fillText(txt, centerX, centerY);
+            }
+          }
+        });
+        </script>
+
+
+        
+
+
+
+        <script>
+            var ctx = document.getElementById('opp_results').getContext('2d');
+            var opp_results = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Win ({{opp_tw.opp_tw}})', 'Draw ({{opp_draws.opp_draws}})', 'Loss ({{opp_tl.opp_tl}})', 'No Contest ({{opp_nc.opp_nc}})'],
+                    datasets: [{
+                        data: [{{opp_tw.opp_tw}}, {{opp_draws.opp_draws}}, {{opp_tl.opp_tl}}, {{opp_nc.opp_nc}}],
+                        backgroundColor: ['#00cc00', '#FFFF00','#ff3333', '000000'],
+                        borderWidth: 0.5 ,
+                        borderColor: '#ddd'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                          center: {
+                          text: '{{opp_tfs.opp_tfs}}',
+                          color: '#E8E8E8', //Default black
+                          borderWidth: 0.5 ,
+                          borderColor: '#ff3333',
+                          fontStyle: 'Helvetica', //Default Arial
+                          sidePadding: 50 //Default 20 (as a percentage)
+                        }
+                    },
+                    title: {
+                        display: false,
+                        text: 'Results',
+                        position: 'top',
+                        fontSize: 16,
+                        fontColor: '#E8E8E8',
+                        padding: 20
+                    },
+                    legend: {
+                        display: false,
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 10,
+                            fontColor: '#E8E8E8',
+                            padding: 20
+                        }
+                    },
+                    tooltips: {
+                        enabled: false
+                    },
+                    layout: {
+                        padding: {
+                            bottom: 20,
+                            top: 20
+                        }
+                    },
+                    plugins: {
+                       datalabels: {
+                            anchor: 'end',
+                            display: 'center',
+                            color: '#E8E8E8',
+                            align: 'end',
+                            textAlign: 'center',
+                            font: {
+                                lineHeight: 1.0
+                            },
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value*100 / sum).toFixed(2)+"%";
+                                return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+        <script>
+            var ctx = document.getElementById('opp_wins').getContext('2d');
+            var opp_wins = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['KO/TKO ({{opp_tkow.opp_tkow}})', 'Submission ({{opp_tsubw.opp_tsubw}})', 'Decision ({{opp_tdecw.opp_tdecw}})'],
+                    datasets: [{
+                        data: [{{opp_tkow.opp_tkow}}, {{opp_tsubw.opp_tsubw}}, {{opp_tdecw.opp_tdecw}}],
+                        backgroundColor: ['#00cc00', '#00a100', '#ccff99'],
+                        borderWidth: 0.5 ,
+                        borderColor: '#00cc00'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                          center: {
+                          text: '{{opp_tw.opp_tw}}',
+                          color: '#E8E8E8', //Default black
+                          borderWidth: 0.5 ,
+                          borderColor: '#00cc00',
+                          fontStyle: 'Helvetica', //Default Arial
+                          sidePadding: 50 //Default 20 (as a percentage)
+                        }
+                    },
+                    title: {
+                        display: false,
+                        text: 'Wins',
+                        position: 'top',
+                        fontSize: 16,
+                        fontColor: '#E8E8E8',
+                        padding: 20
+                    },
+                    legend: {
+                        display: false,
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 10,
+                            fontColor: '#E8E8E8',
+                            padding: 20
+                        }
+                    },
+                    tooltips: {
+                        enabled: false
+                    },
+                    layout: {
+                        padding: {
+                            bottom: 20,
+                            top: 20
+                        }
+                    },
+                    plugins: {
+                       datalabels: {
+                            anchor: 'end',
+                            display: 'center',
+                            color: '#E8E8E8',
+                            align: 'end',
+                            textAlign: 'center',
+                            font: {
+                                lineHeight: 1.0
+                            },
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value*100 / sum).toFixed(2)+"%";
+                                return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+        <script>
+            var ctx = document.getElementById('opp_losses').getContext('2d');
+            var opp_losses = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['KO/TKO ({{opp_tkol.opp_tkol}})', 'Submission ({{opp_tsubl.opp_tsubl}})', 'Decision ({{opp_tdecl.opp_tdecl}})'],
+                    datasets: [{
+                        data: [{{opp_tkol.opp_tkol}}, {{opp_tsubl.opp_tsubl}}, {{opp_tdecl.opp_tdecl}}],
+                        backgroundColor: ['#ff3333', '#990000', '#ff9999'],
+                        borderWidth: 0.5 ,
+                        borderColor: '#ff3333'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                          center: {
+                          text: '{{opp_tl.opp_tl}}',
+                          color: '#E8E8E8', //Default black
+                          borderWidth: 0.5 ,
+                          borderColor: '#ff3333',
+                          fontStyle: 'Helvetica', //Default Arial
+                          sidePadding: 50 //Default 20 (as a percentage)
+                        }
+                    },
+                    title: {
+                        display: false,
+                        text: 'Losses',
+                        position: 'top',
+                        fontSize: 16,
+                        fontColor: '#E8E8E8',
+                        padding: 20,
+                    },
+                    legend: {
+                        display: false,
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 10,
+                            fontColor: '#E8E8E8',
+                            padding: 20
+                        }
+                    },
+                    tooltips: {
+                        enabled: false
+                    },
+                    layout: {
+                        padding: {
+                            bottom: 20,
+                            top: 20
+                        }
+                    },
+                    plugins: {
+                       datalabels: {
+                            anchor: 'end',
+                            display: 'center',
+                            color: '#E8E8E8',
+                            align: 'end',
+                            textAlign: 'center',
+                            font: {
+                                lineHeight: 1.0
+                            },
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = (value*100 / sum).toFixed(2)+"%";
+                                return ctx.chart.data.labels[ctx.dataIndex] + ' ' + percentage;
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+        <script>
+            Chart.pluginService.register({
+              beforeDraw: function (chart) {
+                if (chart.config.options.elements.center) {
+                  //Get ctx from string
+                  var ctx = chart.chart.ctx;
+
+                  //Get options from the center object in options
+                  var centerConfig = chart.config.options.elements.center;
+                  var fontStyle = centerConfig.fontStyle || 'Arial';
+                  var txt = centerConfig.text;
+                  var color = centerConfig.color || '#000';
+                  var sidePadding = centerConfig.sidePadding || 20;
+                  var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+                  //Start with a base font of 30px
+                  ctx.font = "30px " + fontStyle;
+
+                  //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                  var stringWidth = ctx.measureText(txt).width;
+                  var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                  // Find out how much the font can grow in width.
+                  var widthRatio = elementWidth / stringWidth;
+                  var newFontSize = Math.floor(30 * widthRatio);
+                  var elementHeight = (chart.innerRadius * 2);
+
+                  // Pick a new font size so it will not be larger than the height of label.
+                  var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+                  //Set font settings to draw it correctly.
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'middle';
+                  var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                  var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                  ctx.font = fontSizeToUse+"px " + fontStyle;
+                  ctx.fillStyle = color;
+
+                  //Draw text in center
+                  ctx.fillText(txt, centerX, centerY);
+                }
+              }
+            });
+            </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.6.2/basic/ckeditor.js"></script>
+    <script type="text/javascript">
+      CKEDITOR.replace('editor')
+    </script>
+</body>
+</html>

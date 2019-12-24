@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="container">
+  <h1>Events <small> Welcome, {{session.username}}</small></h1>
+  <a class="btn btn-success" href="/add_fighter"> Add Event</a>
+  <p></p>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#upcoming">Upcoming</a></li>
+    <li><a data-toggle="tab" href="#past">Past</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="upcoming" class="tab-pane fade in active">
+        <small><table class="table table-striped">
+        <tr>
+          <th style="width: 150px; padding-left: 20px">Date</th>
+          <th style="width: 400px; padding-left: 20px">Event Name</th>
+          <th style="width: 350px; padding-left: 20px">Venue</th>
+          <th style="width: 350px; padding-left: 20px">Location</th>
+        </tr>
+        {% for event in event %}
+        <tr>
+            <td style="width: 150px; padding-left: 20px">{{event.date_}}</td>
+            <td style="width: 400px; padding-left: 20px"><a href="cards/{{event.event_name}}">{{event.event_name}}</a></td>
+            <td style="width: 350px; padding-left: 20px">{{event.venue}}</td>
+            <td style="width: 350px; padding-left: 20px">{{event.location}}</td>
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <hr>
+    <div id="past" class="tab-pane fade in active">
+        <small><table class="table table-striped">
+        <tr>
+          <th style="width: 150px; padding-left: 20px">Date</th>
+          <th style="width: 400px; padding-left: 20px">Event Name</th>
+          <th style="width: 350px; padding-left: 20px">Venue</th>
+          <th style="width: 350px; padding-left: 20px">Location</th>
+        </tr>
+        {% for p_event in p_event %}
+        <tr>
+            <td style="width: 150px; padding-left: 20px">{{p_event.date_}}</td>
+            <td style="width: 400px; padding-left: 20px"><a href="cards/{{p_event.event_name}}">{{p_event.event_name}}</a></td>
+            <td style="width: 350px; padding-left: 20px">{{p_event.venue}}</td>
+            <td style="width: 350px; padding-left: 20px">{{p_event.location}}</td>
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

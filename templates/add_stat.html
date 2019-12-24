@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Add Stats</h1>
+  {% from "includes/_formhelpers.html" import render_field %}
+  <small><form method="POST" action="">
+    <div class="form-group">
+          {{ render_field(form.fig_name, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.opponent, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.kd, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.ssl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.ssa_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.tsl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.tsa_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.tdl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.tda_, class_="form-control") }}
+    </div>
+    </div>
+          {{ render_field(form.sub_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.pass_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.rev, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.headl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.heada_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.bodyl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.bodya_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.legl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.lega_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.distl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.dista_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.clinchl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.clincha_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.groundl_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.grounda_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.event, class_="form-control") }}
+    </div>
+    <div class="form-group">
+          {{ render_field(form.date_, class_="form-control") }}
+    </div>
+    <p><input class="btn btn-primary" type="submit" value="Submit">
+  </form>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>H Calcs</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Fig Name</th>
+            <th>Total Fights</th>
+            <th>Total Wins</th>
+            <th>Total Losses</th>
+            <th>Total Ko Wins</th>
+            <th>Total Sub Win</th>
+            <th>Total Dec Wins</th>
+            <th>Total Ko Losses</th>
+            <th>Total Sub Losses</th>
+            <th>Total Dec Losses</th>
+            <th>Other Win/Loss</th>
+            <th>Total Draws</th>
+            <th>Total No Contests</th>
+            <th>First Round Finishes</th>
+            <th>POTN</th>
+            <th>FOTN</th>
+            <th>KOOTN</th>
+            <th>SOTN</th>
+            <th>Bonuses</th>
+            <th>UFC Titles</th>
+            <th>Total Fight Time</th>
+        </tr>
+        {% for hcalcs in hcalcs %}
+        <tr>
+            <td>{{hcalcs.hcalcs}}</td>
+        {% endfor %}
+    </table>
+{% endblock %}

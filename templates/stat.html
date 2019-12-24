@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Stat</h1>
+  <p></p>
+    <small><table class="table table-striped">
+      <tr>
+        <th>Date</th>
+              <th>Fighter Name</th>
+              <th>Opponent</th>
+              <th>KD</th>
+              <th>SS<br>L</th>
+              <th>SS A</th>
+              <th>SS %</th>
+              <th>TS L</th>
+              <th>TS A</th>
+              <th>TS %</th>
+              <th>TD L</th>
+              <th>TD A</th>
+              <th>TD %</th>
+              <th>Sub</th>
+              <th>Pass</th>
+              <th>Rev</th>
+              <th>Head L</th>
+              <th>Head A</th>
+              <th>Head %</th>
+              <th>Body L</th>
+              <th>Body A</th>
+              <th>Body %</th>
+              <th>Leg L</th>
+              <th>Leg A</th>
+              <th>Leg %</th>
+              <th>Dist L</th>
+              <th>Dist A</th>
+              <th>Dist %</th>
+              <th>Clinch L</th>
+              <th>Clinch A</th>
+              <th>Clinch A</th>
+              <th>Ground L</th>
+              <th>Ground A</th>
+              <th>Ground %</th>
+              <th>Event</th>
+            </tr>
+            {% for stat in stats %}
+            <tr>
+                <td>{{stat.date_}}</td>
+                <td><a href="stat/{{stat.fig_name}}">{{stat.fig_name}}</a></td>
+                <td>{{stat.opponent}}</td>
+                <td>{{stat.kd}}</td>
+                <td>{{stat.ssl_}}</td>
+                <td>{{stat.ssa_}}</td>
+                <td>{{stat.ssac_}}</td>
+                <td>{{stat.tsl_}}</td>
+                <td>{{stat.tsa_}}</td>
+                <td>{{stat.tsac_}}</td>
+                <td>{{stat.tdl_}}</td>
+                <td>{{stat.tda_}}</td>
+                <td>{{stat.tdac_}}</td>
+                <td>{{stat.sub_}}</td>
+                <td>{{stat.pass_}}</td>
+                <td>{{stat.rev}}</td>
+                <td>{{stat.headl_}}</td>
+                <td>{{stat.heada_}}</td>
+                <td>{{stat.headac_}}</td>
+                <td>{{stat.bodyl_}}</td>
+                <td>{{stat.bodya_}}</td>
+                <td>{{stat.bodyac_}}</td>
+                <td>{{stat.legl_}}</td>
+                <td>{{stat.lega_}}</td>
+                <td>{{stat.legac_}}</td>
+                <td>{{stat.distl_}}</td>
+                <td>{{stat.dista_}}</td>
+                <td>{{stat.distac_}}</td>
+                <td>{{stat.clinchl_}}</td>
+                <td>{{stat.clincha_}}</td>
+                <td>{{stat.clinchac_}}</td>
+                <td>{{stat.groundl_}}</td>
+                <td>{{stat.grounda_}}</td>
+                <td>{{stat.groundac_}}</td>
+                <td>{{stat.event}}</td>
+                <td><a href="edit_stat/{{stat.fig_name}}" class="btn btn-default pull-right">Edit</a></td>
+                <td>
+                  <form action="{{url_for('delete_stat', id=stat.fig_name)}}" method="post">
+                    <input type="hidden" name="method" value="DELETE">
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are You Sure For Delete?')">
+                  </form>
+                </td>
+              </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

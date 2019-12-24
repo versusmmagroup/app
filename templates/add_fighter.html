@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Add Fighter</h1>
+  {% from "includes/_formhelpers.html" import render_field %}
+  <small><form method="POST" action="">
+    <div class="form-group">
+      {{ render_field(form.fig_name, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.nickname, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.rank_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.weightclass, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.country, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.height, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.status, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.weight, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.arm_length, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.leg_length, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.stance, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.ufc_debut, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.camp, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.birthday, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.twitter, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.instagram, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.ufc_link, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.ufc_stats_link, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.espn_link, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.other_links, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.strengths, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.keys_, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.xfactors, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.analyst_notes, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.accolades, class_="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.other_info, class_="form-control") }}
+    </div>
+    <p><input class="btn btn-primary" type="submit" value="Submit">
+  </form>
+{% endblock %}

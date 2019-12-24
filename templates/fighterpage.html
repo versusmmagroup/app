@@ -1,0 +1,241 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1 align="center">{{bio.fig_name}}</h1><a href = {{ url_for('edit_fighter', id=bio.fig_name) }} class="btn btn-default">Edit</a>
+    
+    <hr>
+    <h3>Bio</h3>
+    <small>Nickname:  {{bio.nickname}}<br>
+    Rank:  {{bio.rank_}}<br>
+    Weightclass:  {{bio.weightclass}}<br>
+    Country:  {{bio.country}}<br>
+    Height:  {{bio.height}}<br>
+    Status:  {{bio.status}}<br>
+    Age:  {{bio.age}}<br>
+    Weight:  {{bio.weight}} lbs.<br>
+    Arm Length:  {{bio.arm_length}}"<br>
+    Leg Length:  {{bio.leg_length}}"<br>
+    Stance:  {{bio.stance}}<br>
+    UFC Debut:  {{bio.ufcdebut}}<br>
+    Camp:  {{bio.camp}}<br>
+    Birthday:  {{bio.birthday_}}<br>
+    Twitter:  {{bio.twitter}}<br>
+    Instagram:  {{bio.instagram}}<br>
+    <a href="{{bio.ufc_link}}">UFC Profile</a><br>
+    <a href="{{bio.ufc_stats_link}}">UFC Stats Profile</a><br>
+    <a href="{{bio.espn_link}}">ESPN Profile</a><br>
+    <a href="{{bio.other_links}}">Other Profiles</a><br>
+    Strengths: {{bio.strengths}}<br>
+    Analyst's Notes: {{bio.analyst_notes}}<br>
+    Accolades: {{bio.accolades}}<br>
+    Other Info: {{bio.other_info}}<br>
+<br>
+    <h3>Historical Calculations</h3>
+    Total Fights: {{tfs.tfs}}<br>
+    Total Wins: {{tw.tw}}<br>
+    Total Losses: {{tl.tl}}<br>
+    Total KO/TKO Wins: {{tkow.tkow}}<br>
+    Total Sub Wins: {{tsubw.tsubw}}<br>
+    Total Dec Wins: {{tdecw.tdecw}}<br>
+    Total KO/TKO Losses: {{tkol.tkol}}<br>
+    Total Sub Losses: {{tsubl.tsubl}}<br>
+    Total Dec Losses: {{tdecl.tdecl}}<br>
+    Draws: {{draws.draws}}<br>
+    No Contests: {{nc.nc}}<br>
+    First Round Finishes: {{frf.frf}}<br>
+    POTN: {{potn.potn}}<br>
+    FOTN: {{fotn.fotn}}<br>
+    KOOTN: {{kootn.kootn}}<br>
+    SOTN: {{sotn.sotn}}<br>
+    Total Bonuses: {{bonuses.bonuses}}<br>
+    Total Fight Time: {{tft.tft}}<br>
+<br>
+    <table>
+    <tr>
+        <th><h3>Offensive<h3></th>
+        <th><h3>Defensive<h3></th>
+    </tr>
+    <tr>
+        <td>
+        Knockdowns: {{kd.kd}}<br>
+        Significant Strikes Landed: {{ssla.ssla}}<br>
+        Significant Strikes Attempted: {{ssat.ssat}}<br>
+        Significant Strikes Accuracy: {{ssacc.ssacc}}%<br>
+        Total Strikes Landed: {{tsl.tsl}}<br>
+        Total Strikes Attempted: {{tsat.tsat}}<br>
+        Total Strikes Accuracy: {{tsacc.tsacc}}%<br>
+        Takedowns Landed: {{tdl.tdl}}<br>
+        Takedowns Attempted: {{tdat.tdat}}<br>
+        Takedowns Accuracy: {{tdacc.tdacc}}%<br>
+        Submission Attempts: {{subs.subs}}<br>
+        Passes : {{passes.passes}}<br>
+        Reversals: {{rev.rev}}<br>
+        Head Landed: {{hsl.hsl}}<br>
+        Head Attempted: {{hsat.hsat}}<br>
+        Head Accuracy: {{hsacc.hsacc}}%<br>
+        Body Landed: {{bsl.bsl}}<br>
+        Body Attempted: {{bsat.bsat}}<br>
+        Body Accuracy: {{bsacc.bsacc}}%<br>
+        Leg Landed: {{lsl.lsl}}<br>
+        Leg Attempted: {{lsat.lsat}}<br>
+        Leg Accuracy: {{lsacc.lsacc}}%<br>
+        Distance Landed: {{dsl.dsl}}<br>
+        Distance Attempted: {{dsat.dsat}}<br>
+        Distance Accuracy: {{dsacc.dsacc}}%<br>
+        Clinch Landed: {{csl.csl}}<br>
+        Clinch Attempted: {{csat.csat}}<br>
+        Clinch Accuracy: {{csacc.csacc}}%<br>
+        Ground Landed: {{gsl.gsl}}<br>
+        Ground Attempted: {{gsat.gsat}}<br>
+        Ground Accuracy: {{gsacc.gsacc}}%<br>
+        </td>
+        <td>
+        Knockdowns: {{dkd.dkd}}<br>
+        Significant Strikes Absorbed: {{dssla.dssla}}<br>
+        Significant Strikes Incoming: {{dtsat.dtsat}}<br>
+        Significant Strikes Defense: {{dssacc.dssacc}}%<br>
+        Total Strikes Absorbed: {{dtsl.dtsl}}<br>
+        Total Strikes Incoming: {{dtsat.dtsat}}<br>
+        Total Strikes Defense: {{dtsacc.dtsacc}}%<br>
+        Takedowns Absorbed: {{dtdl.dtdl}}<br>
+        Takedowns Attempted: {{dtdat.dtdat}}<br>
+        Takedown Defense: {{dtdacc.dtdacc}}%<br>
+        Submission Attempts: {{dsubs.dsubs}}<br>
+        Passes : {{dpasses.dpasses}}<br>
+        Reversals: {{drev.drev}}<br>
+        Head Absorbed: {{dhsl.dhsl}}<br>
+        Head Incoming: {{dhsat.dhsat}}<br>
+        Head Defense: {{dhsacc.dhsacc}}%<br>
+        Body Absorbed: {{dbsl.dbsl}}<br>
+        Body Attempted: {{dbsat.dbsat}}<br>
+        Body Defense: {{dbsacc.dbsacc}}%<br>
+        Leg Absorbed: {{dlsl.dlsl}}<br>
+        Leg Incoming: {{dlsat.dlsat}}<br>
+        Leg Defense: {{dlsacc.dlsacc}}%<br>
+        Distance Absorbed: {{ddsl.ddsl}}<br>
+        Distance Attempted: {{ddsat.ddsat}}<br>
+        Distance Defense: {{ddsacc.ddsacc}}%<br>
+        Clinch Absorbed: {{dcsl.dcsl}}<br>
+        Clinch Incoming: {{dcsat.dcsat}}<br>
+        Clinch Defense: {{dcsacc.dcsacc}}%<br>
+        Ground Absorbed: {{dgsl.dgsl}}<br>
+        Ground Attempted: {{dgsat.dgsat}}<br>
+        Ground Defense: {{dgsacc.dgsacc}}%<br>
+        </td>
+    </tr>
+</table>
+<br>
+    <h3>Histories</h3>
+    <table class="table table-striped">
+    <tr>
+        <th>Date</th>
+        <th>Fighter Name</th>
+        <th>Opponent</th>
+        <th>Result</th>
+        <th>Method</th>
+        <th>Round</th>
+        <th>Time</th>
+        <th>Other Info</th>
+    </tr>
+    <tr>
+        {% for history in history %}
+        <td>{{history.date_}}</td>
+        <td>{{history.fig_name}}</td>
+        <td>{{history.opponent}}</td>
+        <td>{{history.result}}</td>
+        <td>{{history.method_}}</td>
+        <td>{{history.round_}}</td>
+        <td>{{history.time_}}</td>
+        <td>{{history.notes}}</td>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+<br>
+        <h3>Offensive Stats</h3>
+            <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th>Fighter Name</th>
+                <th>Opponent</th>
+                <th>KD</th>
+                <th align="center">Significant<br>Strikes</th>
+                <th align="center">Total<br>Strikes</th>
+                <th align="center">Head<br>Strikes</th>
+                <th align="center">Body<br>Strikes</th>
+                <th align="center">Leg<br>Strikes</th>
+                <th align="center">Distance<br>Strikes</th>
+                <th align="center">Clinch<br>Strikes</th>
+                <th align="center">Ground<br>Strikes</th>
+                <th>Sub</th>
+                <th>Pass</th>
+                <th>Rev</th>
+                <th align="center">Takedowns</th>
+            </tr>
+            {% for stat in stats_o %}
+            <tr>
+                <td>{{stat.date_}}</td>
+                <td>{{stat.fig_name}}</td>
+                <td>{{stat.opponent}}</td>
+                <td align="center">{{stat.kd}}</td>
+                <td align="center" >{{stat.ssl_}} of {{stat.ssa_}}<br>({{stat.ssac_}}%)</td>
+                <td align="center">{{stat.tsl_}} of {{stat.tsa_}}<br>({{stat.tsac_}}%)</td>
+                <td align="center">{{stat.headl_}} of {{stat.heada_}}<br>({{stat.headac_}}%)</td>
+                <td align="center">{{stat.bodyl_}} of {{stat.bodya_}}<br>({{stat.bodyac_}}%)</td>
+                <td align="center">{{stat.legl_}} of {{stat.lega_}}<br>({{stat.legac_}}%)</td>
+                <td align="center">{{stat.distl_}} of {{stat.dista_}}<br>({{stat.distac_}}%)</td>
+                <td align="center">{{stat.clinchl_}} of {{stat.clincha_}}<br>({{stat.clinchac_}}%)</td>
+                <td align="center">{{stat.groundl_}} of {{stat.grounda_}}<br>({{stat.groundac_}}%)</td>
+                <td align="center">{{stat.sub_}}</td>
+                <td align="center">{{stat.pass_}}</td>
+                <td align="center">{{stat.rev}}</td>
+                <td align="center">{{stat.tdl_}} of {{stat.tda_}}<br>({{stat.tdac_}}%)</td>
+              </tr>
+            {% endfor %}
+            </table>
+<br>
+            <h3>Defensive Stats</h3>
+                <table class="table table-striped">
+                <tr>
+                    <th>Date</th>
+                    <th>Fighter Name</th>
+                    <th>Opponent</th>
+                    <th>KD</th>
+                    <th align="center">Significant<br>Strikes</th>
+                    <th align="center">Total<br>Strikes</th>
+                    <th align="center">Head<br>Strikes</th>
+                    <th align="center">Body<br>Strikes</th>
+                    <th align="center">Leg<br>Strikes</th>
+                    <th align="center">Distance<br>Strikes</th>
+                    <th align="center">Clinch<br>Strikes</th>
+                    <th align="center">Ground<br>Strikes</th>
+                    <th>Sub</th>
+                    <th>Pass</th>
+                    <th>Rev</th>
+                    <th align="center">Takedowns</th>
+                </tr>
+                    {% for stat in stats_d %}
+                    <tr>
+                    <td>{{stat.date_}}</td>
+                    <td>{{stat.fig_name}}</td>
+                    <td>{{stat.opponent}}</td>
+                    <td align="center">{{stat.kd}}</td>
+                    <td align="center" >{{stat.ssl_}} of {{stat.ssa_}}<br>({{stat.ssac_}}%)</td>
+                    <td align="center">{{stat.tsl_}} of {{stat.tsa_}}<br>({{stat.tsac_}}%)</td>
+                    <td align="center">{{stat.headl_}} of {{stat.heada_}}<br>({{stat.headac_}}%)</td>
+                    <td align="center">{{stat.bodyl_}} of {{stat.bodya_}}<br>({{stat.bodyac_}}%)</td>
+                    <td align="center">{{stat.legl_}} of {{stat.lega_}}<br>({{stat.legac_}}%)</td>
+                    <td align="center">{{stat.distl_}} of {{stat.dista_}}<br>({{stat.distac_}}%)</td>
+                    <td align="center">{{stat.clinchl_}} of {{stat.clincha_}}<br>({{stat.clinchac_}}%)</td>
+                    <td align="center">{{stat.groundl_}} of {{stat.grounda_}}<br>({{stat.groundac_}}%)</td>
+                    <td align="center">{{stat.sub_}}</td>
+                    <td align="center">{{stat.pass_}}</td>
+                    <td align="center">{{stat.rev}}</td>
+                    <td align="center">{{stat.tdl_}} of {{stat.tda_}}<br>({{stat.tdac_}}%)</td>
+              </tr>
+                {% endfor %}
+            </table>
+
+
+
+{% endblock %}

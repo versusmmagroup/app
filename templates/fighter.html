@@ -1,0 +1,193 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1 align="center">{{bio.fig_name}}</h1>
+  <hr>
+  <h2>Bio</h2>
+  <small><div>
+    {{bio.nickname}}<br>
+    {{bio.rank_}}<br>
+    {{bio.weightclass}}<br>
+    {{bio.country}}<br>
+    {{bio.height}}<br>
+    {{bio.status}}<br>
+    {{bio.age}}<br>
+    {{bio.weight}}<br>
+    {{bio.arm_length}}<br>
+    {{bio.leg_length}}<br>
+    {{bio.stance}}<br>
+    {{bio.ufc_debut}}<br>
+    {{bio.camp}}<br>
+    {{bio.birthday_}}<br>
+    {{bio.twitter}}<br>
+    {{bio.instagram}}<br>
+    {{bio.ufc_link}}<br>
+    {{bio.ufc_stats_link}}<br>
+    {{bio.espn_link}}<br>
+    {{bio.other_links}}<br>
+    {{bio.strengths}}<br>
+    {{bio.keys_}}<br>
+    {{bio.xfactors}}<br>
+    {{bio.analyst_notes}}<br>
+    {{bio.accolades}}<br>
+    {{bio.other_info}}<br>
+    {{bio.notable_wins}}<br>
+    {{bio.histories_hist_id}}<br>
+  </div>
+    <h1>Histories</h1>
+        <table class="table table-striped">
+        <tr>
+            <th>Date</th>
+            <th>Fighter Name</th>
+            <th>Opponent</th>
+            <th>Result</th>
+            <th>Method</th>
+            <th>Round</th>
+            <th>Time</th>
+        </tr>
+        <tr>
+        {% for history in history %}
+            <td>{{history.date_}}</td>
+            <td>{{history.fig_name}}</td>
+            <td>{{history.opponent}}</td>
+            <td>{{history.result}}</td>
+            <td>{{history.method_}}</td>
+            <td>{{history.round_}}</td>
+            <td>{{history.time_}}</td>
+            <td>{{history.notes}}</td>
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+        <h1>Offensive Stats</h1>
+            <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th>Fighter Name</th>
+                <th>Opponent</th>
+                <th>KD</th>
+                <th>Sub</th>
+                <th>Pass</th>
+                <th>Rev</th>               
+                <th>Significant Strikes</th>
+                <th>Total Strikes</th>
+                <th>Takedowns</th>
+                <th>Head Strikes</th>
+                <th>Body Strikes</th>
+                <th>Leg Strikes</th>
+                <th>Distance Strikes</th>
+                <th>Clinch Strikes</th>
+                <th>Ground Strikes</th>
+            </tr>
+            {% for stat in stats_o %}
+            <tr>
+                <td>{{stat.date_}}</td>
+                <td>{{stat.fig_name}}</td>
+                <td>{{stat.opponent}}</td>
+                <td>{{stat.kd}}</td>
+                <td>{{stat.sub_}}</td>
+                <td>{{stat.pass_}}</td>
+                <td>{{stat.rev}}</td>
+                <td>{{stat.ssl_}}/{{stat.ssa_}}({{stat.ssac_}})</td>
+                <td>{{stat.tsl_}}/{{stat.tsa_}}({{stat.tsac_}})</td>
+                <td>{{stat.tdl_}}/{{stat.tda_}}({{stat.tdac_}})</td>
+                <td>{{stat.headl_}}/{{stat.heada_}}({{stat.headac_}})</td>
+                <td>{{stat.bodyl_}}/{{stat.bodya_}}({{stat.bodyac_}})</td>
+                <td>{{stat.legl_}}/{{stat.lega_}}({{stat.legac_}})</td>
+                <td>{{stat.distl_}}/{{stat.dista_}}({{stat.distac_}})</td>
+                <td>{{stat.clinchl_}}/{{stat.clincha_}}({{stat.clinchac_}})</td>
+                <td>{{stat.groundl_}}/{{stat.grounda_}}({{stat.groundac_}})</td>
+              </tr>
+            {% endfor %}
+            </table>
+            <h1>Defensive Stats</h1>
+                <table class="table table-striped">
+                <tr>
+                    <th>Date</th>
+                    <th>Fighter Name</th>
+                    <th>Opponent</th>
+                    <th>KD</th>
+                    <th>SS<br>L</th>
+                    <th>SS A</th>
+                    <th>SS %</th>
+                    <th>TS L</th>
+                    <th>TS A</th>
+                    <th>TS %</th>
+                    <th>TD L</th>
+                    <th>TD A</th>
+                    <th>TD %</th>
+                    <th>Sub</th>
+                    <th>Pass</th>
+                    <th>Rev</th>
+                    <th>Head L</th>
+                    <th>Head A</th>
+                    <th>Head %</th>
+                    <th>Body L</th>
+                    <th>Body A</th>
+                    <th>Body %</th>
+                    <th>Leg L</th>
+                    <th>Leg A</th>
+                    <th>Leg %</th>
+                    <th>Dist L</th>
+                    <th>Dist A</th>
+                    <th>Dist %</th>
+                    <th>Clinch L</th>
+                    <th>Clinch A</th>
+                    <th>Clinch A</th>
+                    <th>Ground L</th>
+                    <th>Ground A</th>
+                    <th>Ground %</th>
+                    <th>Event</th>
+                </tr>
+                {% for stat in stats_d %}
+                <tr>
+                    <td>{{stat.date_}}</td>
+                    <td>{{stat.fig_name}}</td>
+                    <td>{{stat.opponent}}</td>
+                    <td>{{stat.kd}}</td>
+                    <td>{{stat.ssl_}}</td>
+                    <td>{{stat.ssa_}}</td>
+                    <td>{{stat.ssac_}}</td>
+                    <td>{{stat.tsl_}}</td>
+                    <td>{{stat.tsa_}}</td>
+                    <td>{{stat.tsac_}}</td>
+                    <td>{{stat.tdl_}}</td>
+                    <td>{{stat.tda_}}</td>
+                    <td>{{stat.tdac_}}</td>
+                    <td>{{stat.sub_}}</td>
+                    <td>{{stat.pass_}}</td>
+                    <td>{{stat.rev}}</td>
+                    <td>{{stat.headl_}}</td>
+                    <td>{{stat.heada_}}</td>
+                    <td>{{stat.headac_}}</td>
+                    <td>{{stat.bodyl_}}</td>
+                    <td>{{stat.bodya_}}</td>
+                    <td>{{stat.bodyac_}}</td>
+                    <td>{{stat.legl_}}</td>
+                    <td>{{stat.lega_}}</td>
+                    <td>{{stat.legac_}}</td>
+                    <td>{{stat.distl_}}</td>
+                    <td>{{stat.dista_}}</td>
+                    <td>{{stat.distac_}}</td>
+                    <td>{{stat.clinchl_}}</td>
+                    <td>{{stat.clincha_}}</td>
+                    <td>{{stat.clinchac_}}</td>
+                    <td>{{stat.groundl_}}</td>
+                    <td>{{stat.grounda_}}</td>
+                    <td>{{stat.groundac_}}</td>
+                    <td>{{stat.event}}</td>
+                  </tr>
+                {% endfor %}
+            </table>
+            <h1>History Calcs</h1>
+                {% for fighter in total_fights %}
+            <div>
+                Total Fights {{total_fights.total_fights}}<br>
+            </div>
+                {% endfor %}
+                {% for fighter in total_wins %}
+            <div>
+                Total Wins {{total_wins.total_wins}}<br>
+            </div>
+                {% endfor %}
+{% endblock %}

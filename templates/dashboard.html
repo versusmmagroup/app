@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Fighters <small> Welcome, {{session.username}}</small></h1>
+  <a class="btn btn-success" href="/add_fighter"> Add Fighter</a>
+  <hr>
+  <table class="table table-striped">
+    <tr>
+      <th>ID</th>
+      <th>Fighter Name</th>
+      <th>Weightclass</th>
+      <th>Country</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for fighter in fighters %}
+    <tr>
+        <td>{{fighter.id}}</td>
+        <td><a href="fighter/{{fighter.fig_name}}">{{fighter.fig_name}}</a></td>
+        <td>{{fighter.weightclass}}</td>
+        <td>{{fighter.country}}</td>
+        <td><a href="edit_fighter/{{fighter.id}}" class="btn btn-default pull-right">Edit</a></td>
+        <td>
+          <form action="{{url_for('delete_fighter', id=fighter.id)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are You Sure For Delete?')">
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

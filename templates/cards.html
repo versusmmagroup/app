@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h3>{{event_name}}</h3> <small> {{eventcard.date_}} - {{eventcard.location}} - {{eventcard.venue}}</small>
+  <p></p>
+    <small><table class="table table-striped">
+    <tr>
+      <th style="padding-left: 20px">Bout</th>
+      <th style="padding-left: 10px">Fighter</th>
+      <th style="padding-left: 10px">Opponent</th>
+      <th style="padding-left: 10px">Result</th>
+      <th style="padding-left: 10px">Method</th>
+      <th style="padding-left: 10px">Notes</th>
+    </tr>
+    {% for cards in cards %}
+    <tr>
+        <td nowrap style="padding-left: 20px"><a href = {{ url_for('versus', fig_name=cards.fig_name, opponent=cards.opponent) }}>{{cards.fig_name}} vs. {{cards.opponent}}</a></td>
+        <td nowrap style="padding-left: 10px">{{cards.fig_name}}</td>
+        <td nowrap style="padding-left: 10px">{{cards.opponent}}</td>
+        <td nowrap style="padding-left: 10px">{{cards.result}}</td>
+        <td style="padding-left: 10px">{{cards.method_}}</td>
+        <td>{{cards.notes}}</td>
+    </tr>
+    {% endfor %}
+    {% for p_cards in p_cards %}
+    <tr>
+        <td nowrap style="padding-left: 20px"><a href={{ url_for('versus', fig_name=p_cards.fig_name, opponent=p_cards.opponent) }}>{{p_cards.fig_name}} vs. {{p_cards.opponent}}</a></td>
+        <td nowrap style="padding-left: 10px">{{p_cards.fig_name}}</td>
+        <td nowrap style="padding-left: 10px">{{p_cards.opponent}}</td>
+        <td nowrap style="padding-left: 10px">{{p_cards.result}}</td>
+        <td style="padding-left: 10px">{{p_cards.method_}}</td>
+        <td>{{p_cards.notes}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

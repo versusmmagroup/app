@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>figname</h1>
+  <ul class="list-group">
+    {% for fig_name in fig_name %}
+      <li class="list-group-item"><a href="fig_name/{{fig_name.fig_name}}">{{fig_name.fig_name}}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

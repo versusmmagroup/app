@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1 align="center">{{fig_name}}</h1>
+  <hr>
+  <h3>Historical Calculations</h3>
+  {% for hcalc in hcalc %}
+  <div>
+    Fighter Name: {{fig_name}}<br>
+    Total Fights: {{tfs.tfs}}<br>
+    Total Wins: {{tw.tw}}<br>
+    Total Losses: {{tl.tl}}<br>
+    Total KO/TKO Wins: {{tkow.tkow}}<br>
+    Total Sub Wins: {{tsubw.tsubw}}<br>
+    Total Dec Wins: {{tdecw.tdecw}}<br>
+    Total KO/TKO Losses: {{tkol.tkol}}<br>
+    Total Sub Losses: {{tsubl.tsubl}}<br>
+    Total Dec Losses: {{tdecl.tdecl}}<br>
+    Other Wins/Losses: {{hcalc.other_wins_losses}}<br>
+    Draws: {{draws.draws}}<br>
+    No Contests: {{nc.nc}}<br>
+    First Round Finishes: {{frf.frf}}<br>
+    POTN: {{potn.potn}}<br>
+    FOTN: {{fotn.fotn}}<br>
+    KOOTN: {{kootn.kootn}}<br>
+    SOTN: {{sotn.sotn}}<br>
+    Total Bonuses: {{bonuses.bonuses}}<br>
+    UFC Championships: {{hcalc.Won_UFC_Championship}}<br>
+    Total Fight Time: {{tft.tft}}<br>
+  </div>
+  {% endfor %}
+  {% endblock %}

@@ -1,0 +1,1547 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="flex-container">
+        <div class="lchartbox">
+            <div class="name-container">
+                <h1>{{bio.fig_name}}</h1>{{bio.nickname}}
+            </div>
+            <p></p>
+            <div class="row">
+                <div class="col-xs-6" align="center">
+                    #{{ranks.rank}}
+                </div>
+                <div class="col-xs-6" align="center">
+                    {{tw.tw}}-{{tl.tl}}-{{draws.draws}}-{{nc.nc}}
+                </div>
+                <a href = {{ url_for('edit_fighter', id=bio.fig_name) }} class="btn btn-default">Edit</a>
+            </div>
+        </div>
+        <div class="statbox">
+            <h1 align="center">Ver/suS</h1><br>
+            <h3 align="center">
+                <div class="row" style="background-color: #2F2B32; margin-bottom: 5px;">
+                    <div class="col-xs-5" align="right" style="background-color: #2F2B32">{{odds.odds}}</div>
+                    <div class="col-xs-2" align="center" style="background-color: #2F2B32">/</div>
+                    <div class="col-xs-5" align="left" style="background-color: #2F2B32">{{opp_odds.opp_odds}}</div>
+                </div>
+            </h3>
+        </div>
+        <div class="rchartbox">
+            <div class="name-container">
+                <h1>{{opp_bio.fig_name}}</h1>{{opp_bio.nickname}}
+            </div>
+            <p></p>
+            <div class="row">
+                <div class="col-xs-6" align="center">
+                    #{{opp_ranks.rank}}
+                </div>
+                <div class="col-xs-6" align="center">
+                    {{opp_tw.opp_tw}}-{{opp_tl.opp_tl}}-{{opp_draws.opp_draws}}-{{opp_nc.opp_nc}}
+                </div>
+                <a href = {{ url_for('edit_fighter', id=opp_bio.fig_name) }} class="btn btn-default">Edit</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="flex-container">
+        <div class="lchartbox">
+            <div class="fight-container">
+                <div style="white-space: pre-wrap;">Camp:<br>{{bio.camp}}</div>
+                <br>
+                <div style="white-space: pre-wrap;">Strengths:<br>{{bio.strengths}}</div>
+                <br>
+                <div style="white-space: pre-wrap;">Accolades:<br>{{bio.accolades}}</div>
+                <br>
+                <div style="white-space: pre-wrap;">Other Info:<br>{{bio.other_info}}</div>
+                <br>
+                <div style="white-space: pre-wrap;">Analyst's Notes:<br>{{bio.analyst_notes}}</div>
+                <div>
+                    {% if tl.tl < 1 %}
+                    <div>Undefeated</div>
+                    {% else %}
+                    <div></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="statbox">
+            <div>
+                <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">Bios</div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if bio.height > opp_bio.height %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #;">{{bio.height}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #">Height</div>
+                <div class="col-xs-2" align="center" style="background-color: #">{{opp_bio.height}}</div>
+                {% elif bio.height >= opp_bio.height %}
+                <div class="col-xs-2" align="center">{{bio.height}}</div>
+                <div class="col-xs-8" align="center">Height</div>
+                <div class="col-xs-2" align="center">{{opp_bio.height}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{bio.height}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Height</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_bio.height}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if bio.weight > opp_bio.weight %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{bio.weight}}lb</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Weight</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_bio.weight}}</div>
+                {% elif bio.weight >= opp_bio.weight %}
+                <div class="col-xs-2" align="center">{{bio.weight}}</div>
+                <div class="col-xs-8" align="center">Weight</div>
+                <div class="col-xs-2" align="center">{{opp_bio.weight}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{bio.weight}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Weight</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_bio.weight}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if bio.arm_length > opp_bio.arm_length %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{bio.arm_length}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Arm Reach</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_bio.arm_length}}</div>
+                {% elif bio.arm_length >= opp_bio.arm_length %}
+                <div class="col-xs-2" align="center">{{bio.arm_length}}</div>
+                <div class="col-xs-8" align="center">Arm Reach</div>
+                <div class="col-xs-2" align="center">{{opp_bio.arm_length}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{bio.arm_length}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Arm Reach</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_bio.arm_length}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if bio.leg_length > opp_bio.leg_length %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{bio.leg_length}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Reach</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_bio.leg_length}}</div>
+                {% elif bio.leg_length >= opp_bio.leg_length %}
+                <div class="col-xs-2" align="center">{{bio.leg_length}}</div>
+                <div class="col-xs-8" align="center">Leg Reach</div>
+                <div class="col-xs-2" align="center">{{opp_bio.leg_length}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{bio.leg_length}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Reach</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_bio.leg_length}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32">{{bio.stance}}</div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">Stance</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32">{{opp_bio.stance}}</div>
+            </div>
+
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if bio.age > opp_bio.age %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{bio.age}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Age</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_bio.age}}</div>
+                {% elif bio.age >= opp_bio.age %}
+                <div class="col-xs-2" align="center">{{bio.age}}</div>
+                <div class="col-xs-8" align="center">Age</div>
+                <div class="col-xs-2" align="center">{{opp_bio.age}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{bio.age}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Age</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_bio.age}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32">{{bio.birthday_}}</div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">Birthday</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32">{{opp_bio.birthday_}}</div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32">{{bio.ufcdebut_}}</div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">UFC Debut</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32">{{opp_bio.ufcdebut_}}</div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32">{{bio.country}}</div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">Country</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32">{{opp_bio.country}}</div>
+            </div>
+
+            <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">
+                Links
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32"><a href="{{bio.ufc_link}}">UFC</a><br></div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">UFC</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32"><a href="{{opp_bio.ufc_link}}">UFC</a><br></div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32"><a href="{{bio.ufc_stats_link}}">UFC Stats</a><br></div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">UFC Stats</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32"><a href="{{opp_bio.ufc_stats_link}}">UFC Stats</a><br></div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32"><a href="{{bio.espn_link}}">ESPN</a><br></div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">ESPN</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32"><a href="{{opp_bio.espn_link}}">ESPN</a><br></div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32"><a href="{{bio.other_links}}">Other</a><br></div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">Other</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32"><a href="{{opp_bio.other_links}}">Other</a><br></div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32"><a href="{{bio.instagram}}">Instagram</a><br></div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">Instagram</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32"><a href="{{opp_bio.instagram}}">Instagram</a><br></div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                <div class="col-xs-4" align="left" style="background-color: #2F2B32"><a href="{{bio.twitter}}">Twitter</a><br></div>
+                <div class="col-xs-4" align="center" style="background-color: #2F2B32">Twitter</div>
+                <div class="col-xs-4" align="right" style="background-color: #2F2B32"><a href="{{opp_bio.twitter}}">Twitter</a><br></div>
+            </div>
+        </div>
+        <div class="rchartbox">
+            <div class="fight-container">
+                <div style="white-space: pre-wrap;">Camp:<br>{{opp_bio.camp}}</div>
+                <br>
+                <div style="white-space: pre-wrap;">Strengths:<br>{{opp_bio.strengths}}</div>
+                <br>
+                <div style="white-space: pre-wrap;">Accolades:<br>{{opp_bio.accolades}}</div>
+                <br>
+                <div style="white-space: pre-wrap;">Other Info:<br>{{opp_bio.other_info}}</div>
+                <br>
+                <div style="white-space: pre-wrap;">Analyst's Notes:<br>{{opp_bio.analyst_notes}}</div>
+                <div>
+                    {% if opp_tl.opp_tl < 1 %}
+                    <div style="color: red;">Undefeated</div>
+                    {% else %}
+                    <div></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="flex-container">
+        <div class="lchartbox">
+            <div class="chart-container">
+                <canvas id="results"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="wins"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="losses"></canvas>
+            </div>
+        </div>
+        <div class="statbox">
+            <div>
+                <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">Totals</div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tfs.tfs > opp_tfs.opp_tfs %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #;">{{tfs.tfs}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #">Fights</div>
+                <div class="col-xs-2" align="center" style="background-color: #">{{opp_tfs.opp_tfs}}</div>
+                {% elif tfs.tfs >= opp_tfs.opp_tfs %}
+                <div class="col-xs-2" align="center">{{tfs.tfs}}</div>
+                <div class="col-xs-8" align="center">Fights</div>
+                <div class="col-xs-2" align="center">{{opp_tfs.opp_tfs}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tfs.tfs}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Fights</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tfs.opp_tfs}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tw.tw > opp_tw.opp_tw %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tw.tw}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Wins</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tw.opp_tw}}</div>
+                {% elif tw.tw >= opp_tw.opp_tw %}
+                <div class="col-xs-2" align="center">{{tw.tw}}</div>
+                <div class="col-xs-8" align="center">Wins</div>
+                <div class="col-xs-2" align="center">{{opp_tw.opp_tw}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tw.tw}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Wins</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tw.opp_tw}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tl.tl > opp_tl.opp_tl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tl.tl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Losses</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tl.opp_tl}}</div>
+                {% elif tl.tl >= opp_tl.opp_tl %}
+                <div class="col-xs-2" align="center">{{tl.tl}}</div>
+                <div class="col-xs-8" align="center">Losses</div>
+                <div class="col-xs-2" align="center">{{opp_tl.opp_tl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tl.tl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Losses</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tl.opp_tl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if draws.draws > opp_draws.opp_draws %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{draws.draws}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Draws</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_draws.opp_draws}}</div>
+                {% elif draws.draws >= opp_draws.opp_draws %}
+                <div class="col-xs-2" align="center">{{draws.draws}}</div>
+                <div class="col-xs-8" align="center">Draws</div>
+                <div class="col-xs-2" align="center">{{opp_draws.opp_draws}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{draws.draws}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Draws</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_draws.opp_draws}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if nc.nc > opp_nc.opp_nc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{nc.nc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">No Contests</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_nc.opp_nc}}</div>
+                {% elif nc.nc >= opp_nc.opp_nc %}
+                <div class="col-xs-2" align="center">{{nc.nc}}</div>
+                <div class="col-xs-8" align="center">No Contests</div>
+                <div class="col-xs-2" align="center">{{opp_nc.opp_nc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{nc.nc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">No Contests</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_nc.opp_nc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tkow.tkow > opp_tkow.opp_tkow %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tkow.tkow}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">KO/TKO Wins</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tkow.opp_tkow}}</div>
+                {% elif tkow.tkow >= opp_tkow.opp_tkow %}
+                <div class="col-xs-2" align="center">{{tkow.tkow}}</div>
+                <div class="col-xs-8" align="center">KO/TKO Wins</div>
+                <div class="col-xs-2" align="center">{{opp_tkow.opp_tkow}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tkow.tkow}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">KO/TKO Wins</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tkow.opp_tkow}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tsubw.tsubw > opp_tsubw.opp_tsubw %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tsubw.tsubw}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Sub Wins</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tsubw.opp_tsubw}}</div>
+                {% elif tsubw.tsubw >= opp_tsubw.opp_tsubw %}
+                <div class="col-xs-2" align="center">{{tsubw.tsubw}}</div>
+                <div class="col-xs-8" align="center">Sub Wins</div>
+                <div class="col-xs-2" align="center">{{opp_tsubw.opp_tsubw}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tsubw.tsubw}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Sub Wins</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tsubw.opp_tsubw}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tdecw.tdecw > opp_tdecw.opp_tdecw %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tdecw.tdecw}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Dec Wins</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tdecw.opp_tdecw}}</div>
+                {% elif tdecw.tdecw >= opp_tdecw.opp_tdecw %}
+                <div class="col-xs-2" align="center">{{tdecw.tdecw}}</div>
+                <div class="col-xs-8" align="center">Dec Wins</div>
+                <div class="col-xs-2" align="center">{{opp_tdecw.opp_tdecw}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tdecw.tdecw}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Dec Wins</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tdecw.opp_tdecw}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tkol.tkol > opp_tkol.opp_tkol %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tkol.tkol}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">KO/TKO Losses</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tkol.opp_tkol}}</div>
+                {% elif tkol.tkol >= opp_tkol.opp_tkol %}
+                <div class="col-xs-2" align="center">{{tkol.tkol}}</div>
+                <div class="col-xs-8" align="center">KO/TKO Losses</div>
+                <div class="col-xs-2" align="center">{{opp_tkol.opp_tkol}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tkol.tkol}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">KO/TKO Losses</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tkol.opp_tkol}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tsubl.tsubl > opp_tsubl.opp_tsubl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tsubl.tsubl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Sub Losses</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tsubl.opp_tsubl}}</div>
+                {% elif tsubl.tsubl >= opp_tsubl.opp_tsubl %}
+                <div class="col-xs-2" align="center">{{tsubl.tsubl}}</div>
+                <div class="col-xs-8" align="center">Sub Losses</div>
+                <div class="col-xs-2" align="center">{{opp_tsubl.opp_tsubl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tsubl.tsubl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Sub Losses</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tsubl.opp_tsubl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tdecl.tdecl > opp_tdecl.opp_tdecl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tdecl.tdecl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Dec Losses</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tdecl.opp_tdecl}}</div>
+                {% elif tdecl.tdecl >= opp_tdecl.opp_tdecl %}
+                <div class="col-xs-2" align="center">{{tdecl.tdecl}}</div>
+                <div class="col-xs-8" align="center">Dec Losses</div>
+                <div class="col-xs-2" align="center">{{opp_tdecl.opp_tdecl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tdecl.tdecl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Dec Losses</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tdecl.opp_tdecl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if frf.frf > opp_frf.opp_frf %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{frf.frf}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">First Round Finishes</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_frf.opp_frf}}</div>
+                {% elif frf.frf >= opp_frf.opp_frf %}
+                <div class="col-xs-2" align="center">{{frf.frf}}</div>
+                <div class="col-xs-8" align="center">First Round Finishes</div>
+                <div class="col-xs-2" align="center">{{opp_frf.opp_frf}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{frf.frf}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">First Round Finishes</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_frf.opp_frf}}</best-stat>
+                {% endif %}
+            </div>
+            <div>
+                <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">Bonuses</div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if potn.potn > opp_potn.opp_potn %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{potn.potn}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">POTN</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_potn.opp_potn}}</div>
+                {% elif potn.potn >= opp_potn.opp_potn %}
+                <div class="col-xs-2" align="center">{{potn.potn}}</div>
+                <div class="col-xs-8" align="center">POTN</div>
+                <div class="col-xs-2" align="center">{{opp_potn.opp_potn}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{potn.potn}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">POTN</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_potn.opp_potn}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if fotn.fotn > opp_fotn.opp_fotn %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{fotn.fotn}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">FOTN</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_fotn.opp_fotn}}</div>
+                {% elif fotn.fotn >= opp_fotn.opp_fotn %}
+                <div class="col-xs-2" align="center">{{fotn.fotn}}</div>
+                <div class="col-xs-8" align="center">FOTN</div>
+                <div class="col-xs-2" align="center">{{opp_fotn.opp_fotn}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{fotn.fotn}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">FOTN</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_fotn.opp_fotn}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if kootn.kootn > opp_kootn.opp_kootn %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{kootn.kootn}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">KOOTN</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_kootn.opp_kootn}}</div>
+                {% elif kootn.kootn >= opp_kootn.opp_kootn %}
+                <div class="col-xs-2" align="center">{{kootn.kootn}}</div>
+                <div class="col-xs-8" align="center">KOOTN</div>
+                <div class="col-xs-2" align="center">{{opp_kootn.opp_kootn}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{kootn.kootn}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">KOOTN</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_kootn.opp_kootn}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if sotn.sotn > opp_sotn.opp_sotn %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{sotn.sotn}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">SOTN</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_sotn.opp_sotn}}</div>
+                {% elif sotn.sotn >= opp_sotn.opp_sotn %}
+                <div class="col-xs-2" align="center">{{sotn.sotn}}</div>
+                <div class="col-xs-8" align="center">SOTN</div>
+                <div class="col-xs-2" align="center">{{opp_sotn.opp_sotn}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{sotn.sotn}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">SOTN</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_sotn.opp_sotn}}</best-stat>
+                {% endif %}
+            </div>
+            <div>
+                <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">Fight Time</div>
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tft.tft > opp_tft.opp_tft %}
+                <best-stat class="col-xs-3" align="center" style="background-color: #5cb85c">{{tft.tft}}</best-stat>
+                <div class="col-xs-6" align="center" style="background-color: #2F2B32">Total Fight Time</div>
+                <div class="col-xs-3" align="center" style="background-color: #2F2B32">{{opp_tft.opp_tft}}</div>
+                {% elif tft.tft >= opp_tft.opp_tft %}
+                <div class="col-xs-3" align="center">{{tft.tft}}</div>
+                <div class="col-xs-6" align="center">Total Fight Time</div>
+                <div class="col-xs-3" align="center">{{opp_tft.opp_tft}}</div>
+                {% else %}
+                <div class="col-xs-3" align="center" style="background-color: #2F2B32">{{tft.tft}}</div>
+                <div class="col-xs-6" align="center" style="background-color: #2F2B32">Total Fight Time</div>
+                <best-stat class="col-xs-3" align="center" style="background-color: #5cb85c">{{opp_tft.opp_tft}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if avgtft.avgtft > opp_avgtft.opp_avgtft %}
+                <best-stat class="col-xs-3" align="center" style="background-color: #5cb85c">{{avgtft.avgtft}}</best-stat>
+                <div class="col-xs-6" align="center" style="background-color: #2F2B32">Average Fight Time</div>
+                <div class="col-xs-3" align="center" style="background-color: #2F2B32">{{opp_avgtft.opp_avgtft}}</div>
+                {% elif avgtft.avgtft >= opp_avgtft.opp_avgtft %}
+                <div class="col-xs-3" align="center">{{avgtft.avgtft}}</div>
+                <div class="col-xs-6" align="center">Average Fight Time</div>
+                <div class="col-xs-3" align="center">{{opp_avgtft.opp_avgtft}}</div>
+                {% else %}
+                <div class="col-xs-3" align="center" style="background-color: #2F2B32">{{avgtft.avgtft}}</div>
+                <div class="col-xs-6" align="center" style="background-color: #2F2B32">Average Fight Time</div>
+                <best-stat class="col-xs-3" align="center" style="background-color: #5cb85c">{{opp_avgtft.opp_avgtft}}</best-stat>
+                {% endif %}
+            </div>
+        </div>
+        <div class="rchartbox">
+            <div class="chart-container">
+                <canvas id="opp_results"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="opp_wins"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="opp_losses"></canvas>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="flex-container">
+        <div class="lchartbox">
+            <div class="barchart-container" style="background-color: #2F2B32;">
+                <canvas id="offensive"></canvas>
+            </div>
+        </div>
+        <div class="statbox">
+            <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">
+                Offensive Averages
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tsacc.tsacc > opp_tsacc.opp_tsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tsacc.tsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tsacc.opp_tsacc}}</div>
+                {% elif tsacc.tsacc >= opp_tsacc.opp_tsacc %}
+                <div class="col-xs-2" align="center">{{tsacc.tsacc}}</div>
+                <div class="col-xs-8" align="center">Total Strikes Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_tsacc.opp_tsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tsacc.tsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tsacc.opp_tsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if ssacc.ssacc > opp_ssacc.opp_ssacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{ssacc.ssacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_ssacc.opp_ssacc}}</div>
+                {% elif ssacc.ssacc >= opp_ssacc.opp_ssacc %}
+                <div class="col-xs-2" align="center">{{ssacc.ssacc}}</div>
+                <div class="col-xs-8" align="center">Significant Strikes Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_ssacc.opp_ssacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{ssacc.ssacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_ssacc.opp_ssacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if hsacc.hsacc > opp_hsacc.opp_hsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{hsacc.hsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_hsacc.opp_hsacc}}</div>
+                {% elif hsacc.hsacc >= opp_hsacc.opp_hsacc %}
+                <div class="col-xs-2" align="center">{{hsacc.hsacc}}</div>
+                <div class="col-xs-8" align="center">Head Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_hsacc.opp_hsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{hsacc.hsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_hsacc.opp_hsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if bsacc.bsacc > opp_bsacc.opp_bsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{bsacc.bsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_bsacc.opp_bsacc}}</div>
+                {% elif bsacc.bsacc >= opp_bsacc.opp_bsacc %}
+                <div class="col-xs-2" align="center">{{bsacc.bsacc}}</div>
+                <div class="col-xs-8" align="center">Body Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_bsacc.opp_bsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{bsacc.bsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_bsacc.opp_bsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if lsacc.lsacc > opp_lsacc.opp_lsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{lsacc.lsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_lsacc.opp_lsacc}}</div>
+                {% elif lsacc.lsacc >= opp_lsacc.opp_lsacc %}
+                <div class="col-xs-2" align="center">{{lsacc.lsacc}}</div>
+                <div class="col-xs-8" align="center">Leg Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_lsacc.opp_lsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{lsacc.lsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_lsacc.opp_lsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dsacc.dsacc > opp_dsacc.opp_dsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dsacc.dsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dsacc.opp_dsacc}}</div>
+                {% elif dsacc.dsacc >= opp_dsacc.opp_dsacc %}
+                <div class="col-xs-2" align="center">{{dsacc.dsacc}}</div>
+                <div class="col-xs-8" align="center">Distance Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_dsacc.opp_dsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dsacc.dsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dsacc.opp_dsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if csacc.csacc > opp_csacc.opp_csacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{csacc.csacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_csacc.opp_csacc}}</div>
+                {% elif csacc.csacc >= opp_csacc.opp_csacc %}
+                <div class="col-xs-2" align="center">{{csacc.csacc}}</div>
+                <div class="col-xs-8" align="center">Clinch Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_csacc.opp_csacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{csacc.csacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_csacc.opp_csacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if gsacc.gsacc > opp_gsacc.opp_gsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{gsacc.gsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_gsacc.opp_gsacc}}</div>
+                {% elif gsacc.gsacc >= opp_gsacc.opp_gsacc %}
+                <div class="col-xs-2" align="center">{{gsacc.gsacc}}</div>
+                <div class="col-xs-8" align="center">Ground Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_gsacc.opp_gsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{gsacc.gsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_gsacc.opp_gsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tdacc.tdacc > opp_tdacc.opp_tdacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tdacc.tdacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Accuracy</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tdacc.opp_tdacc}}</div>
+                {% elif tdacc.tdacc >= opp_tdacc.opp_tdacc %}
+                <div class="col-xs-2" align="center">{{tdacc.tdacc}}</div>
+                <div class="col-xs-8" align="center">Takedowns Accuracy</div>
+                <div class="col-xs-2" align="center">{{opp_tdacc.opp_tdacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tdacc.tdacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Accuracy</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tdacc.opp_tdacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">
+                Other
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if kd.kd > opp_kd.opp_kd %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{kd.kd}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Knockdowns</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_kd.opp_kd}}</div>
+                {% elif kd.kd >= opp_kd.opp_kd %}
+                <div class="col-xs-2" align="center">{{kd.kd}}</div>
+                <div class="col-xs-8" align="center">Knockdowns</div>
+                <div class="col-xs-2" align="center">{{opp_kd.opp_kd}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{kd.kd}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Knockdowns</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_kd.opp_kd}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if subs.subs > opp_subs.opp_subs %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{subs.subs}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Submission Attempts</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_subs.opp_subs}}</div>
+                {% elif subs.subs >= opp_subs.opp_subs %}
+                <div class="col-xs-2" align="center">{{subs.subs}}</div>
+                <div class="col-xs-8" align="center">Submission Attempts</div>
+                <div class="col-xs-2" align="center">{{opp_subs.opp_subs}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{subs.subs}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Submission Attempts</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_subs.opp_subs}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if passes.passes > opp_passes.opp_passes %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{passes.passes}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Passes </div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_passes.opp_passes}}</div>
+                {% elif passes.passes >= opp_passes.opp_passes %}
+                <div class="col-xs-2" align="center">{{passes.passes}}</div>
+                <div class="col-xs-8" align="center">Passes </div>
+                <div class="col-xs-2" align="center">{{opp_passes.opp_passes}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{passes.passes}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Passes </div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_passes.opp_passes}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if rev.rev > opp_rev.opp_rev %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{rev.rev}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Reversals</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_rev.opp_rev}}</div>
+                {% elif rev.rev >= opp_rev.opp_rev %}
+                <div class="col-xs-2" align="center">{{rev.rev}}</div>
+                <div class="col-xs-8" align="center">Reversals</div>
+                <div class="col-xs-2" align="center">{{opp_rev.opp_rev}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{rev.rev}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Reversals</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_rev.opp_rev}}</best-stat>
+                {% endif %}
+                </div>
+        </div>
+        <div class="rchartbox">
+            <div class="barchart-container" style="background-color: #2F2B32;">
+                <canvas id="opp_offensive"></canvas>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="flex-container">
+        <div class="lchartbox">
+            <div class="barchart-container" style="background-color: #2F2B32;">
+                <canvas id="defensive"></canvas>
+            </div>
+        </div>
+        <div class="statbox">
+            <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">
+                Defense Averages
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dtsacc.dtsacc > opp_dtsacc.opp_dtsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dtsacc.dtsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dtsacc.opp_dtsacc}}</div>
+                {% elif dtsacc.dtsacc >= opp_dtsacc.opp_dtsacc %}
+                <div class="col-xs-2" align="center">{{dtsacc.dtsacc}}</div>
+                <div class="col-xs-8" align="center">Total Strikes Defense</div>
+                <div class="col-xs-2" align="center">{{opp_dtsacc.opp_dtsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dtsacc.dtsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dtsacc.opp_dtsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dssacc.dssacc > opp_dssacc.opp_dssacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dssacc.dssacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dssacc.opp_dssacc}}</div>
+                {% elif dssacc.dssacc >= opp_dssacc.opp_dssacc %}
+                <div class="col-xs-2" align="center">{{dssacc.dssacc}}</div>
+                <div class="col-xs-8" align="center">Significant Strikes Defense</div>
+                <div class="col-xs-2" align="center">{{opp_dssacc.opp_dssacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dssacc.dssacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dssacc.opp_dssacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dhsacc.dhsacc > opp_dhsacc.opp_dhsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dhsacc.dhsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dhsacc.opp_dhsacc}}</div>
+                {% elif dhsacc.dhsacc >= opp_dhsacc.opp_dhsacc %}
+                <div class="col-xs-2" align="center">{{dhsacc.dhsacc}}</div>
+                <div class="col-xs-8" align="center">Head Defense</div>
+                <div class="col-xs-2" align="center">{{opp_dhsacc.opp_dhsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dhsacc.dhsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dhsacc.opp_dhsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dbsacc.dbsacc > opp_dbsacc.opp_dbsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dbsacc.dbsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dbsacc.opp_dbsacc}}</div>
+                {% elif dbsacc.dbsacc >= opp_dbsacc.opp_dbsacc %}
+                <div class="col-xs-2" align="center">{{dbsacc.dbsacc}}</div>
+                <div class="col-xs-8" align="center">Body Defense</div>
+                <div class="col-xs-2" align="center">{{opp_dbsacc.opp_dbsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dbsacc.dbsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dbsacc.opp_dbsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dlsacc.dlsacc > opp_dlsacc.opp_dlsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dlsacc.dlsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dlsacc.opp_dlsacc}}</div>
+                {% elif dlsacc.dlsacc >= opp_dlsacc.opp_dlsacc %}
+                <div class="col-xs-2" align="center">{{dlsacc.dlsacc}}</div>
+                <div class="col-xs-8" align="center">Leg Defense</div>
+                <div class="col-xs-2" align="center">{{opp_dlsacc.opp_dlsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dlsacc.dlsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dlsacc.opp_dlsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if ddsacc.ddsacc > opp_ddsacc.opp_ddsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{ddsacc.ddsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_ddsacc.opp_ddsacc}}</div>
+                {% elif ddsacc.ddsacc >= opp_ddsacc.opp_ddsacc %}
+                <div class="col-xs-2" align="center">{{ddsacc.ddsacc}}</div>
+                <div class="col-xs-8" align="center">Distance Defense</div>
+                <div class="col-xs-2" align="center">{{opp_ddsacc.opp_ddsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{ddsacc.ddsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_ddsacc.opp_ddsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dcsacc.dcsacc > opp_dcsacc.opp_dcsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dcsacc.dcsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dcsacc.opp_dcsacc}}</div>
+                {% elif dcsacc.dcsacc >= opp_dcsacc.opp_dcsacc %}
+                <div class="col-xs-2" align="center">{{dcsacc.dcsacc}}</div>
+                <div class="col-xs-8" align="center">Clinch Defense</div>
+                <div class="col-xs-2" align="center">{{opp_dcsacc.opp_dcsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dcsacc.dcsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dcsacc.opp_dcsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dgsacc.dgsacc > opp_dgsacc.opp_dgsacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dgsacc.dgsacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dgsacc.opp_dgsacc}}</div>
+                {% elif dgsacc.dgsacc >= opp_dgsacc.opp_dgsacc %}
+                <div class="col-xs-2" align="center">{{dgsacc.dgsacc}}</div>
+                <div class="col-xs-8" align="center">Ground Defense</div>
+                <div class="col-xs-2" align="center">{{opp_dgsacc.opp_dgsacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dgsacc.dgsacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dgsacc.opp_dgsacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dtdacc.dtdacc > opp_dtdacc.opp_dtdacc %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dtdacc.dtdacc}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedown Defense</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dtdacc.opp_dtdacc}}</div>
+                {% elif dtdacc.dtdacc >= opp_dtdacc.opp_dtdacc %}
+                <div class="col-xs-2" align="center">{{dtdacc.dtdacc}}</div>
+                <div class="col-xs-8" align="center">Takedown Defense</div>
+                <div class="col-xs-2" align="center">{{opp_dtdacc.opp_dtdacc}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dtdacc.dtdacc}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedown Defense</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dtdacc.opp_dtdacc}}</best-stat>
+                {% endif %}
+            </div>
+            <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;"
+                >Other
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dkd.dkd > opp_dkd.opp_dkd %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dkd.dkd}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Knockdowns</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dkd.opp_dkd}}</div>
+                {% elif dkd.dkd >= opp_dkd.opp_dkd %}
+                <div class="col-xs-2" align="center">{{dkd.dkd}}</div>
+                <div class="col-xs-8" align="center">Knockdowns</div>
+                <div class="col-xs-2" align="center">{{opp_dkd.opp_dkd}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dkd.dkd}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Knockdowns</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dkd.opp_dkd}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dsubs.dsubs > opp_dsubs.opp_dsubs %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dsubs.dsubs}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Submission Attempts</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dsubs.opp_dsubs}}</div>
+                {% elif dsubs.dsubs >= opp_dsubs.opp_dsubs %}
+                <div class="col-xs-2" align="center">{{dsubs.dsubs}}</div>
+                <div class="col-xs-8" align="center">Submission Attempts</div>
+                <div class="col-xs-2" align="center">{{opp_dsubs.opp_dsubs}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dsubs.dsubs}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Submission Attempts</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dsubs.opp_dsubs}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dpasses.dpasses > opp_dpasses.opp_dpasses %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dpasses.dpasses}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Passes </div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dpasses.opp_dpasses}}</div>
+                {% elif dpasses.dpasses >= opp_dpasses.opp_dpasses %}
+                <div class="col-xs-2" align="center">{{dpasses.dpasses}}</div>
+                <div class="col-xs-8" align="center">Passes </div>
+                <div class="col-xs-2" align="center">{{opp_dpasses.opp_dpasses}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dpasses.dpasses}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Passes </div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dpasses.opp_dpasses}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if drev.drev > opp_drev.opp_drev %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{drev.drev}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Reversals</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_drev.opp_drev}}</div>
+                {% elif drev.drev >= opp_drev.opp_drev %}
+                <div class="col-xs-2" align="center">{{drev.drev}}</div>
+                <div class="col-xs-8" align="center">Reversals</div>
+                <div class="col-xs-2" align="center">{{opp_drev.opp_drev}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{drev.drev}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Reversals</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_drev.opp_drev}}</best-stat>
+                {% endif %}
+            </div>
+        </div>
+        <div class="rchartbox">
+            <div class="barchart-container" style="background-color: #2F2B32;">
+                <canvas id="opp_defensive"></canvas>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="flex-container">
+        <div class="offstatbox" style="font-size: 14px">
+            <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">
+                Offensive
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tsl.tsl > opp_tsl.opp_tsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tsl.tsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tsl.opp_tsl}}</div>
+                {% elif tsl.tsl >= opp_tsl.opp_tsl %}
+                <div class="col-xs-2" align="center">{{tsl.tsl}}</div>
+                <div class="col-xs-8" align="center">Total Strikes Landed</div>
+                <div class="col-xs-2" align="center">{{opp_tsl.opp_tsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tsl.tsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tsl.opp_tsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tsat.tsat > opp_tsat.opp_tsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tsat.tsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tsat.opp_tsat}}</div>
+                {% elif tsat.tsat >= opp_tsat.opp_tsat %}
+                <div class="col-xs-2" align="center">{{tsat.tsat}}</div>
+                <div class="col-xs-8" align="center">Total Strikes Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_tsat.opp_tsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tsat.tsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tsat.opp_tsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if ssla.ssla > opp_ssla.opp_ssla %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{ssla.ssla}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_ssla.opp_ssla}}</div>
+                {% elif ssla.ssla >= opp_ssla.opp_ssla %}
+                <div class="col-xs-2" align="center">{{ssla.ssla}}</div>
+                <div class="col-xs-8" align="center">Significant Strikes Landed</div>
+                <div class="col-xs-2" align="center">{{opp_ssla.opp_ssla}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{ssla.ssla}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_ssla.opp_ssla}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if ssat.ssat > opp_ssat.opp_ssat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{ssat.ssat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_ssat.opp_ssat}}</div>
+                {% elif ssat.ssat >= opp_ssat.opp_ssat %}
+                <div class="col-xs-2" align="center">{{ssat.ssat}}</div>
+                <div class="col-xs-8" align="center">Significant Strikes Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_ssat.opp_ssat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{ssat.ssat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_ssat.opp_ssat}}</best-stat>
+                {% endif %}
+            </div>
+
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if hsl.hsl > opp_hsl.opp_hsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{hsl.hsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_hsl.opp_hsl}}</div>
+                {% elif hsl.hsl >= opp_hsl.opp_hsl %}
+                <div class="col-xs-2" align="center">{{hsl.hsl}}</div>
+                <div class="col-xs-8" align="center">Head Landed</div>
+                <div class="col-xs-2" align="center">{{opp_hsl.opp_hsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{hsl.hsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_hsl.opp_hsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if hsat.hsat > opp_hsat.opp_hsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{hsat.hsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_hsat.opp_hsat}}</div>
+                {% elif hsat.hsat >= opp_hsat.opp_hsat %}
+                <div class="col-xs-2" align="center">{{hsat.hsat}}</div>
+                <div class="col-xs-8" align="center">Head Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_hsat.opp_hsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{hsat.hsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_hsat.opp_hsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if bsl.bsl > opp_bsl.opp_bsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{bsl.bsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_bsl.opp_bsl}}</div>
+                {% elif bsl.bsl >= opp_bsl.opp_bsl %}
+                <div class="col-xs-2" align="center">{{bsl.bsl}}</div>
+                <div class="col-xs-8" align="center">Body Landed</div>
+                <div class="col-xs-2" align="center">{{opp_bsl.opp_bsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{bsl.bsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_bsl.opp_bsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if bsat.bsat > opp_bsat.opp_bsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{bsat.bsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_bsat.opp_bsat}}</div>
+                {% elif bsat.bsat >= opp_bsat.opp_bsat %}
+                <div class="col-xs-2" align="center">{{bsat.bsat}}</div>
+                <div class="col-xs-8" align="center">Body Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_bsat.opp_bsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{bsat.bsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_bsat.opp_bsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if lsl.lsl > opp_lsl.opp_lsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{lsl.lsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_lsl.opp_lsl}}</div>
+                {% elif lsl.lsl >= opp_lsl.opp_lsl %}
+                <div class="col-xs-2" align="center">{{lsl.lsl}}</div>
+                <div class="col-xs-8" align="center">Leg Landed</div>
+                <div class="col-xs-2" align="center">{{opp_lsl.opp_lsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{lsl.lsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_lsl.opp_lsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if lsat.lsat > opp_lsat.opp_lsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{lsat.lsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_lsat.opp_lsat}}</div>
+                {% elif lsat.lsat >= opp_lsat.opp_lsat %}
+                <div class="col-xs-2" align="center">{{lsat.lsat}}</div>
+                <div class="col-xs-8" align="center">Leg Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_lsat.opp_lsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{lsat.lsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_lsat.opp_lsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dsl.dsl > opp_dsl.opp_dsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dsl.dsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dsl.opp_dsl}}</div>
+                {% elif dsl.dsl >= opp_dsl.opp_dsl %}
+                <div class="col-xs-2" align="center">{{dsl.dsl}}</div>
+                <div class="col-xs-8" align="center">Distance Landed</div>
+                <div class="col-xs-2" align="center">{{opp_dsl.opp_dsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dsl.dsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dsl.opp_dsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dsat.dsat > opp_dsat.opp_dsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dsat.dsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dsat.opp_dsat}}</div>
+                {% elif dsat.dsat >= opp_dsat.opp_dsat %}
+                <div class="col-xs-2" align="center">{{dsat.dsat}}</div>
+                <div class="col-xs-8" align="center">Distance Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_dsat.opp_dsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dsat.dsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dsat.opp_dsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if csl.csl > opp_csl.opp_csl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{csl.csl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_csl.opp_csl}}</div>
+                {% elif csl.csl >= opp_csl.opp_csl %}
+                <div class="col-xs-2" align="center">{{csl.csl}}</div>
+                <div class="col-xs-8" align="center">Clinch Landed</div>
+                <div class="col-xs-2" align="center">{{opp_csl.opp_csl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{csl.csl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_csl.opp_csl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if csat.csat > opp_csat.opp_csat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{csat.csat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_csat.opp_csat}}</div>
+                {% elif csat.csat >= opp_csat.opp_csat %}
+                <div class="col-xs-2" align="center">{{csat.csat}}</div>
+                <div class="col-xs-8" align="center">Clinch Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_csat.opp_csat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{csat.csat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_csat.opp_csat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if gsl.gsl > opp_gsl.opp_gsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{gsl.gsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_gsl.opp_gsl}}</div>
+                {% elif gsl.gsl >= opp_gsl.opp_gsl %}
+                <div class="col-xs-2" align="center">{{gsl.gsl}}</div>
+                <div class="col-xs-8" align="center">Ground Landed</div>
+                <div class="col-xs-2" align="center">{{opp_gsl.opp_gsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{gsl.gsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_gsl.opp_gsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if gsat.gsat > opp_gsat.opp_gsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{gsat.gsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_gsat.opp_gsat}}</div>
+                {% elif gsat.gsat >= opp_gsat.opp_gsat %}
+                <div class="col-xs-2" align="center">{{gsat.gsat}}</div>
+                <div class="col-xs-8" align="center">Ground Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_gsat.opp_gsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{gsat.gsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_gsat.opp_gsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tdl.tdl > opp_tdl.opp_tdl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tdl.tdl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Landed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tdl.opp_tdl}}</div>
+                {% elif tdl.tdl >= opp_tdl.opp_tdl %}
+                <div class="col-xs-2" align="center">{{tdl.tdl}}</div>
+                <div class="col-xs-8" align="center">Takedowns Landed</div>
+                <div class="col-xs-2" align="center">{{opp_tdl.opp_tdl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tdl.tdl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Landed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tdl.opp_tdl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if tdat.tdat > opp_tdat.opp_tdat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{tdat.tdat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_tdat.opp_tdat}}</div>
+                {% elif tdat.tdat >= opp_tdat.opp_tdat %}
+                <div class="col-xs-2" align="center">{{tdat.tdat}}</div>
+                <div class="col-xs-8" align="center">Takedowns Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_tdat.opp_tdat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{tdat.tdat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_tdat.opp_tdat}}</best-stat>
+                {% endif %}
+            </div>
+        </div>
+        <div class="container" style="width: 50px">
+        </div>
+        <div class="defstatbox" style="font-size: 14px">
+            <div style="font-size: 25px; font-family: Trattatello, fantasy, cursive; text-align: center;">
+                Defensive
+            </div>
+
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dtsl.dtsl > opp_dtsl.opp_dtsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dtsl.dtsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dtsl.opp_dtsl}}</div>
+                {% elif dtsl.dtsl >= opp_dtsl.opp_dtsl %}
+                <div class="col-xs-2" align="center">{{dtsl.dtsl}}</div>
+                <div class="col-xs-8" align="center">Total Strikes Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_dtsl.opp_dtsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dtsl.dtsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dtsl.opp_dtsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dtsat.dtsat > opp_dtsat.opp_dtsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dtsat.dtsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Incoming</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dtsat.opp_dtsat}}</div>
+                {% elif dtsat.dtsat >= opp_dtsat.opp_dtsat %}
+                <div class="col-xs-2" align="center">{{dtsat.dtsat}}</div>
+                <div class="col-xs-8" align="center">Total Strikes Incoming</div>
+                <div class="col-xs-2" align="center">{{opp_dtsat.opp_dtsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dtsat.dtsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Total Strikes Incoming</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dtsat.opp_dtsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dssla.dssla > opp_dssla.opp_dssla %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dssla.dssla}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dssla.opp_dssla}}</div>
+                {% elif dssla.dssla >= opp_dssla.opp_dssla %}
+                <div class="col-xs-2" align="center">{{dssla.dssla}}</div>
+                <div class="col-xs-8" align="center">Significant Strikes Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_dssla.opp_dssla}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dssla.dssla}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dssla.opp_dssla}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dtsat.dtsat > opp_dtsat.opp_dtsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dtsat.dtsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Incoming</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dtsat.opp_dtsat}}</div>
+                {% elif dtsat.dtsat >= opp_dtsat.opp_dtsat %}
+                <div class="col-xs-2" align="center">{{dtsat.dtsat}}</div>
+                <div class="col-xs-8" align="center">Significant Strikes Incoming</div>
+                <div class="col-xs-2" align="center">{{opp_dtsat.opp_dtsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dtsat.dtsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Significant Strikes Incoming</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dtsat.opp_dtsat}}</best-stat>
+                {% endif %}
+            </div>
+
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dhsl.dhsl > opp_dhsl.opp_dhsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dhsl.dhsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dhsl.opp_dhsl}}</div>
+                {% elif dhsl.dhsl >= opp_dhsl.opp_dhsl %}
+                <div class="col-xs-2" align="center">{{dhsl.dhsl}}</div>
+                <div class="col-xs-8" align="center">Head Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_dhsl.opp_dhsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dhsl.dhsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dhsl.opp_dhsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dhsat.dhsat > opp_dhsat.opp_dhsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dhsat.dhsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Incoming</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dhsat.opp_dhsat}}</div>
+                {% elif dhsat.dhsat >= opp_dhsat.opp_dhsat %}
+                <div class="col-xs-2" align="center">{{dhsat.dhsat}}</div>
+                <div class="col-xs-8" align="center">Head Incoming</div>
+                <div class="col-xs-2" align="center">{{opp_dhsat.opp_dhsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dhsat.dhsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Head Incoming</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dhsat.opp_dhsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dbsl.dbsl > opp_dbsl.opp_dbsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dbsl.dbsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dbsl.opp_dbsl}}</div>
+                {% elif dbsl.dbsl >= opp_dbsl.opp_dbsl %}
+                <div class="col-xs-2" align="center">{{dbsl.dbsl}}</div>
+                <div class="col-xs-8" align="center">Body Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_dbsl.opp_dbsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dbsl.dbsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dbsl.opp_dbsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dbsat.dbsat > opp_dbsat.opp_dbsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dbsat.dbsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dbsat.opp_dbsat}}</div>
+                {% elif dbsat.dbsat >= opp_dbsat.opp_dbsat %}
+                <div class="col-xs-2" align="center">{{dbsat.dbsat}}</div>
+                <div class="col-xs-8" align="center">Body Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_dbsat.opp_dbsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dbsat.dbsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Body Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dbsat.opp_dbsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dlsl.dlsl > opp_dlsl.opp_dlsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dlsl.dlsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dlsl.opp_dlsl}}</div>
+                {% elif dlsl.dlsl >= opp_dlsl.opp_dlsl %}
+                <div class="col-xs-2" align="center">{{dlsl.dlsl}}</div>
+                <div class="col-xs-8" align="center">Leg Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_dlsl.opp_dlsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dlsl.dlsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dlsl.opp_dlsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dlsat.dlsat > opp_dlsat.opp_dlsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dlsat.dlsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Incoming</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dlsat.opp_dlsat}}</div>
+                {% elif dlsat.dlsat >= opp_dlsat.opp_dlsat %}
+                <div class="col-xs-2" align="center">{{dlsat.dlsat}}</div>
+                <div class="col-xs-8" align="center">Leg Incoming</div>
+                <div class="col-xs-2" align="center">{{opp_dlsat.opp_dlsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dlsat.dlsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Leg Incoming</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dlsat.opp_dlsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if ddsl.ddsl > opp_ddsl.opp_ddsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{ddsl.ddsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_ddsl.opp_ddsl}}</div>
+                {% elif ddsl.ddsl >= opp_ddsl.opp_ddsl %}
+                <div class="col-xs-2" align="center">{{ddsl.ddsl}}</div>
+                <div class="col-xs-8" align="center">Distance Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_ddsl.opp_ddsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{ddsl.ddsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_ddsl.opp_ddsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if ddsat.ddsat > opp_ddsat.opp_ddsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{ddsat.ddsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_ddsat.opp_ddsat}}</div>
+                {% elif ddsat.ddsat >= opp_ddsat.opp_ddsat %}
+                <div class="col-xs-2" align="center">{{ddsat.ddsat}}</div>
+                <div class="col-xs-8" align="center">Distance Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_ddsat.opp_ddsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{ddsat.ddsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Distance Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_ddsat.opp_ddsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dcsl.dcsl > opp_dcsl.opp_dcsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dcsl.dcsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dcsl.opp_dcsl}}</div>
+                {% elif dcsl.dcsl >= opp_dcsl.opp_dcsl %}
+                <div class="col-xs-2" align="center">{{dcsl.dcsl}}</div>
+                <div class="col-xs-8" align="center">Clinch Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_dcsl.opp_dcsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dcsl.dcsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dcsl.opp_dcsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dcsat.dcsat > opp_dcsat.opp_dcsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dcsat.dcsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Incoming</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dcsat.opp_dcsat}}</div>
+                {% elif dcsat.dcsat >= opp_dcsat.opp_dcsat %}
+                <div class="col-xs-2" align="center">{{dcsat.dcsat}}</div>
+                <div class="col-xs-8" align="center">Clinch Incoming</div>
+                <div class="col-xs-2" align="center">{{opp_dcsat.opp_dcsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dcsat.dcsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Clinch Incoming</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dcsat.opp_dcsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dgsl.dgsl > opp_dgsl.opp_dgsl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dgsl.dgsl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dgsl.opp_dgsl}}</div>
+                {% elif dgsl.dgsl >= opp_dgsl.opp_dgsl %}
+                <div class="col-xs-2" align="center">{{dgsl.dgsl}}</div>
+                <div class="col-xs-8" align="center">Ground Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_dgsl.opp_dgsl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dgsl.dgsl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dgsl.opp_dgsl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dgsat.dgsat > opp_dgsat.opp_dgsat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dgsat.dgsat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dgsat.opp_dgsat}}</div>
+                {% elif dgsat.dgsat >= opp_dgsat.opp_dgsat %}
+                <div class="col-xs-2" align="center">{{dgsat.dgsat}}</div>
+                <div class="col-xs-8" align="center">Ground Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_dgsat.opp_dgsat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dgsat.dgsat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Ground Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dgsat.opp_dgsat}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dtdl.dtdl > opp_dtdl.opp_dtdl %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dtdl.dtdl}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Absorbed</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dtdl.opp_dtdl}}</div>
+                {% elif dtdl.dtdl >= opp_dtdl.opp_dtdl %}
+                <div class="col-xs-2" align="center">{{dtdl.dtdl}}</div>
+                <div class="col-xs-8" align="center">Takedowns Absorbed</div>
+                <div class="col-xs-2" align="center">{{opp_dtdl.opp_dtdl}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dtdl.dtdl}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Absorbed</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dtdl.opp_dtdl}}</best-stat>
+                {% endif %}
+            </div>
+            <div class="row" style="background-color: #2F2B32; margin-bottom: 5px; outline-width: 1px; outline-color: #b4b4b4; outline-style: solid">
+                {% if dtdat.dtdat > opp_dtdat.opp_dtdat %}
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{dtdat.dtdat}}</best-stat>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Attempted</div>
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{opp_dtdat.opp_dtdat}}</div>
+                {% elif dtdat.dtdat >= opp_dtdat.opp_dtdat %}
+                <div class="col-xs-2" align="center">{{dtdat.dtdat}}</div>
+                <div class="col-xs-8" align="center">Takedowns Attempted</div>
+                <div class="col-xs-2" align="center">{{opp_dtdat.opp_dtdat}}</div>
+                {% else %}
+                <div class="col-xs-2" align="center" style="background-color: #2F2B32">{{dtdat.dtdat}}</div>
+                <div class="col-xs-8" align="center" style="background-color: #2F2B32">Takedowns Attempted</div>
+                <best-stat class="col-xs-2" align="center" style="background-color: #5cb85c">{{opp_dtdat.opp_dtdat}}</best-stat>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="flex-container" style="padding: -40px">
+        <div class="">
+            <div class="hist-container">
+                <canvas id="histwins"></canvas>
+            </div>
+            <div class="hist-container">
+                <canvas id="histlosses"></canvas>
+            </div>
+            <div class="hist-container">
+                <canvas id="streaks"></canvas>
+            </div>
+        </div>
+        <div class="">
+            <div class="hist-container">
+                <canvas id="opp_histwins"></canvas>
+            </div>
+            <div class="hist-container">
+                <canvas id="opp_histlosses"></canvas>
+            </div>
+            <div class="hist-container">
+                <canvas id="opp_streaks"></canvas>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Fighters <small> Welcome, {{session.username}}</small></h1>
+  <a class="btn btn-success" href="/add_fighter"> Add Fighter</a>
+  <p></p>
+    <small><table class="table table-striped">
+    <tr>
+      <th>edit</th>
+      <th></th>
+      <th>ID</th>
+      <th>Fighter Name</th>
+      <th>Weightclass</th>
+      <th>Country</th>
+      <th>Nickname</th>
+      <th>stance</th>
+      <th>ufc debut</th>
+      <th>height</th>
+      <th>weight</th>
+      <th>status</th>
+      <th>arm length</th>
+      <th>leg length</th>
+      <th>camp</th>
+      <th>birthday</th>
+      <th>twitter</th>
+      <th>instagram</th>
+      <th>strengths</th>
+      <th>analyst notes</th>
+      <th>other info</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for fighter in fighters %}
+    <tr nowrap>
+        <td><a href="edit_fighter/{{fighter.fig_name}}" class="btn btn-default pull-right">Edit</a></td>
+        <td>
+        <td>{{fighter.fig_id}}</td>
+        <td><a href="fighterpage/{{fighter.fig_name}}">{{fighter.fig_name}}</a></td>
+        <td nowrap>{{fighter.weightclass}}</td>
+        <td nowrap>{{fighter.country}}</td>
+        <td nowrap>{{fighter.nickname}}</td>
+        <td nowrap>{{fighter.stance}}</td>
+        <td nowrap>{{fighter.ufcdebut_}}</td>
+        <td nowrap>{{fighter.height}}</td>
+        <td nowrap>{{fighter.weight}}</td>
+        <td nowrap>{{fighter.status}}</td>
+        <td nowrap>{{fighter.arm_length}}</td>
+        <td nowrap>{{fighter.leg_length}}</td>
+        <td nowrap>{{fighter.camp}}</td>
+        <td nowrap>{{fighter.birthday_}}</td>
+        <td nowrap>{{fighter.twitter}}</td>
+        <td nowrap>{{fighter.instagram}}</td>
+        <td nowrap>{{fighter.strengths}}</td>
+        <td nowrap>{{fighter.analyst_notes}}</td>
+        <td nowrap>{{fighter.other_info}}</td>
+        <td nowrap><a href="edit_fighter/{{fighter.fig_name}}" class="btn btn-default pull-right">Edit</a></td>
+        <td>
+          <form action="{{url_for('delete_fighter', id=fighter.fig_name)}}" method="post">
+            <input type="hidden" name="method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are You Sure For Delete?')">
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
